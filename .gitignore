@@ -12,6 +12,10 @@ coverage/
 .venv/
 venv/
 __pycache__/
+.pytest_cache/
+.ruff_cache/
+.import_linter_cache/
+*.tsbuildinfo
 
 # 編輯器與作業系統
 .vscode/

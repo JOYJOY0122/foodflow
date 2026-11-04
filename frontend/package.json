@@ -1,0 +1,48 @@
+{
+  "name": "foodflow-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "gen:api": "uv run --project ../backend python ../backend/scripts/export_openapi.py node_modules/.cache/foodflow/openapi.json && openapi-typescript node_modules/.cache/foodflow/openapi.json -o src/shared/api/schema.d.ts"
+  },
+  "dependencies": {
+    "@mantine/core": "9.7.5",
+    "@mantine/dates": "9.7.5",
+    "@mantine/form": "9.7.5",
+    "@mantine/hooks": "9.7.5",
+    "@tanstack/react-query": "5.105.3",
+    "dayjs": "1.11.23",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router": "8.5.1",
+    "uuid": "14.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
+    "eslint": "10.14.0",
+    "jsdom": "30.1.3",
+    "openapi-typescript": "7.13.0",
+    "postcss": "8.5.32",
+    "postcss-preset-mantine": "1.18.0",
+    "postcss-simple-vars": "7.0.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.1",
+    "vite": "8.3.5",
+    "vitest": "5.1.0"
+  }
+}
