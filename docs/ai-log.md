@@ -11,3 +11,4 @@
 | 2026-11-05 | Ken | 架構設計 | bmad-agent-architect | 定稿的架構主幹、`docs/team-tasks.md` 的 C 文件章節 | C 文件草稿 `docs/c-software-design.md`、PlantUML 原始檔、README 開發環境需求、更新分工表 | 待 Ken 檢查：repo 內沒有範例 G2，章節依分工表，須對照範例；PlantUML 圖尚未匯出。AI 發現主幹 C3 寫了 Email，違反分工表規則，已改為外部通知 |
 | 2026-11-05 | Ken | 架構設計 | Claude、PlantUML、Graphviz | `docs/diagrams/` 的兩個 PlantUML 原始檔 | PNG 圖檔，並放入 `docs/c-software-design.md` | 中文正常，不需另設字型；檢查圖時發現 AI 把 alerts 標成「唯讀查詢的模組」，但它會寫 `alert_setting`，已改為「不修改庫存的模組」 |
 | 2026-11-05 | Ken | 需求 | bmad-agent-architect | 定稿的架構決定 | 更新 SRS 第 4.1、7.1、10.3 節並同步 `prd.md`；更新架構主幹的已確認決策 | Ken 決定：報廢分布與損失金額限管理者；NFR-07 負載測試排期末，負責人待定 |
+| 2026-11-05 | Ken | 架構設計 | Claude、PlantUML | 系統架構圖太寬，要求改為由上往下、寬度約 1000 像素內 | 調整 `c-system-architecture.puml` 版面並重新轉成 PNG | 第一版寬 1185 未達標；第二版的隱藏連線打亂前端順序，已捨棄；比較多種版面後採用寬 791 的版本 |

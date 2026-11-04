@@ -1,7 +1,9 @@
 @startuml c-system-architecture
 title 食序 FoodFlow 系統架構圖
-left to right direction
+top to bottom direction
 skinparam shadowing false
+skinparam nodesep 25
+skinparam ranksep 35
 
 actor "管理者" as admin
 actor "一般員工" as staff
@@ -11,9 +13,9 @@ rectangle "前端（React + TypeScript + Vite）" as fe {
   component "features/*/hooks.ts" as hooks
   component "features/*/api.ts" as api
   component "shared/api/client.ts" as client
-  pages --> hooks
-  hooks --> api
-  api --> client
+  pages -right-> hooks
+  hooks -right-> api
+  api -right-> client
 }
 
 rectangle "後端（FastAPI）" as be {
@@ -33,6 +35,7 @@ database "PostgreSQL 17\ndocker-compose" as db
 admin --> pages
 staff --> pages
 client --> router : HTTP /api/v1
+hooks -[hidden]-> router
 ledger --> db
 repo --> db
 @enduml
