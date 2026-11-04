@@ -1,0 +1,25 @@
+#!/bin/sh
+# 移除 commit 訊息中的 AI 署名，真人的 Co-authored-by 會保留。
+# 每人 clone 後要執行一次：git config core.hooksPath .githooks
+
+msg_file="$1"
+tmp_file="${msg_file}.tmp.$$"
+
+awk '
+{
+  lower = tolower($0)
+  if (lower ~ /^[ \t]*co-authored-by[ \t]*:/ &&
+      lower ~ /anthropic|claude|openai|chatgpt|codex|copilot|cursor|gemini|devin|\[bot\]/) next
+  # 同時涵蓋 Claude Code 實際產生的 "Generated with [Claude Code](...)" 格式
+  if (lower ~ /generated with \[?claude code/) next
+  if ($0 ~ /^[ \t]*Claude-Session:/) next
+  print
+}
+' "$msg_file" > "$tmp_file" || {
+  rm -f "$tmp_file"
+  echo "commit-msg: 無法處理 commit 訊息" >&2
+  exit 1
+}
+
+cat "$tmp_file" > "$msg_file"
+rm -f "$tmp_file"

@@ -1,0 +1,75 @@
+name: no-ai-contributors
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: 檢查作者、提交者與 Co-authored-by
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          PUSH_HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          ai_pattern='anthropic|claude|openai|chatgpt|codex|copilot|cursor|gemini|devin|\[bot\]'
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            revisions="$PR_BASE_SHA..$PR_HEAD_SHA"
+          elif git cat-file -e "$PUSH_BEFORE_SHA^{commit}" 2>/dev/null; then
+            revisions="$PUSH_BEFORE_SHA..$PUSH_HEAD_SHA"
+          else
+            # 第一次 push 或 force push 找不到舊 commit 時，檢查整段歷史
+            revisions="$PUSH_HEAD_SHA"
+          fi
+
+          echo "檢查範圍：$revisions"
+          failed=0
+
+          for commit in $(git rev-list "$revisions"); do
+            author="$(git log -1 --format='%an <%ae>' "$commit")"
+            committer="$(git log -1 --format='%cn <%ce>' "$commit")"
+            coauthors="$(git log -1 --format='%B' "$commit" | grep -iE '^[[:space:]]*co-authored-by[[:space:]]*:' || true)"
+            hits=""
+
+            if printf '%s\n' "$author" | grep -iEq "$ai_pattern"; then
+              hits="${hits}  作者：$author"$'\n'
+            fi
+            if printf '%s\n' "$committer" | grep -iEq "$ai_pattern"; then
+              hits="${hits}  提交者：$committer"$'\n'
+            fi
+            matched_coauthors="$(printf '%s\n' "$coauthors" | grep -iE "$ai_pattern" || true)"
+            if [ -n "$matched_coauthors" ]; then
+              hits="${hits}  共同作者：$matched_coauthors"$'\n'
+            fi
+
+            if [ -n "$hits" ]; then
+              failed=1
+              echo "::error::commit $commit 含 AI 署名"
+              git log -1 --format='%h %s' "$commit"
+              printf '%s' "$hits"
+            fi
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "請依 CONTRIBUTING.md 第 9 節移除署名後再 push。"
+            exit 1
+          fi
+
+          echo "沒有發現 AI 署名。"

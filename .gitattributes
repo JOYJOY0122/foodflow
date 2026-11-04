@@ -1,0 +1,2 @@
+# hook 一律用 LF，否則 Windows（core.autocrlf=true）checkout 後 sh 會執行失敗
+.githooks/* text eol=lf
