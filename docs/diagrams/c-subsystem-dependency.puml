@@ -1,0 +1,44 @@
+@startuml c-subsystem-dependency
+title 食序 FoodFlow 子系統依賴圖
+skinparam shadowing false
+
+package "寫入庫存的模組" {
+  component "goods_receipt\n進貨" as gr
+  component "issue\n領用" as issue
+  component "waste\n報廢" as waste
+  component "stocktake\n盤點" as st
+  component "storage_location\n儲存位置" as loc
+}
+
+package "不修改庫存的模組" {
+  component "alerts\n預警" as alerts
+  component "reports\n異動與統計" as reports
+}
+
+package "庫存核心" {
+  component "inventory\nStockLedger 與庫存查詢" as inv
+}
+
+component "master_data\n食材、分類、供應商" as md
+component "auth\n帳號與權限" as auth
+database "共用唯讀查詢\nstock_levels" as levels
+
+gr --> inv : 寫入
+issue --> inv : 寫入
+waste --> inv : 寫入
+st --> inv : 寫入
+loc --> inv : 換位置
+inv ..> levels : 讀取
+alerts ..> levels : 讀取
+reports ..> inv : 只讀異動資料表
+
+note bottom of auth
+  所有模組的路由都依賴 auth
+  驗證身分與權限（圖中省略）
+end note
+
+note bottom of md
+  其他模組的 Repository 可唯讀查詢主檔，
+  但不可呼叫 master_data 的 Service。
+end note
+@enduml
