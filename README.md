@@ -14,7 +14,7 @@
 確認版本：
 
 ```bash
-python --version
+uv run python --version
 uv --version
 node --version
 docker --version
