@@ -36,7 +36,7 @@ test(inventory): 新增批次報廢測試
 
 ## 4. 模組負責人
 
-待組內決定後補上。
+見 [docs/team-tasks.md](docs/team-tasks.md)。需求編號以 [docs/srs.md](docs/srs.md)（SRS v3.0）為準。
 
 ## 5. AI 使用規則
 
