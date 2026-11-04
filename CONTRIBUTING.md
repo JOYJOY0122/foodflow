@@ -4,7 +4,7 @@
 
 ## 1. 分支與合併
 
-- `main` 受保護，一律透過 PR 合併。
+- `main` 不直接 push，一律透過 PR 合併。
 - 每個 PR 至少需要 1 人 approve。
 - 合併方式一律使用 **Squash and merge**。
 - 分支命名：`feat/`、`fix/`、`docs/`、`chore/` 加上 `<模組>-<簡述>`，例如 `feat/inventory-batch-receipt`。
