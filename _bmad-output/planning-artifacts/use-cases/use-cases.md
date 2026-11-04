@@ -6,6 +6,9 @@ updated: 2026-10-29
 source: ../prds/prd-foodflow-2026-10-29/prd.md
 ---
 
+> **⚠️ 已被 `docs/srs.md`（SRS v3.0）取代。**本檔為早期 AI 產出的版本（FR-1～27、四種角色、銷售登錄），僅保留作為 AI 使用紀錄，請勿依此開發。
+
+
 # 食序 FoodFlow Use Case 規格
 
 ## 0. 說明
