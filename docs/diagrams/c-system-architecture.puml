@@ -1,0 +1,38 @@
+@startuml c-system-architecture
+title 食序 FoodFlow 系統架構圖
+left to right direction
+skinparam shadowing false
+
+actor "管理者" as admin
+actor "一般員工" as staff
+
+rectangle "前端（React + TypeScript + Vite）" as fe {
+  component "components / pages" as pages
+  component "features/*/hooks.ts" as hooks
+  component "features/*/api.ts" as api
+  component "shared/api/client.ts" as client
+  pages --> hooks
+  hooks --> api
+  api --> client
+}
+
+rectangle "後端（FastAPI）" as be {
+  component "API 層\nrouter.py、schemas.py" as router
+  component "Service 層\nservice.py" as service
+  component "Domain\nStrategy、AlertRule、Factory、Notifier" as domain
+  component "StockLedger\n庫存寫入唯一入口" as ledger
+  component "Repository\n介面與 SQLAlchemy 實作" as repo
+  router --> service
+  service --> domain
+  service --> ledger
+  service --> repo
+}
+
+database "PostgreSQL 17\ndocker-compose" as db
+
+admin --> pages
+staff --> pages
+client --> router : HTTP /api/v1
+ledger --> db
+repo --> db
+@enduml
