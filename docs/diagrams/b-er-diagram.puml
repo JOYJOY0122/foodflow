@@ -1,0 +1,196 @@
+@startuml b-er-diagram
+title 食序 FoodFlow｜實體關聯圖（完整欄位）
+top to bottom direction
+hide circle
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 13
+skinparam packageStyle rectangle
+skinparam roundcorner 8
+skinparam nodesep 45
+skinparam ranksep 65
+skinparam ArrowFontSize 11
+skinparam ArrowColor #475569
+skinparam classBorderColor #64748B
+skinparam classBackgroundColor white
+
+package "基本資料" #EFF6FF {
+  entity "員工\nemployee" as employee {
+    * id : bigint <<PK>>
+    --
+    * username : varchar(64) <<UQ>>
+    * password_hash : varchar(255)
+    * name : varchar(100)
+    * role : varchar(32)
+    * is_active : boolean
+    * token_version : integer
+    * created_at : timestamptz
+  }
+
+  entity "食材分類\ningredient_category" as ingredient_category {
+    * id : bigint <<PK>>
+    --
+    * code : varchar(32) <<UQ>>
+    * name : varchar(100)
+      description : text
+    * is_active : boolean
+    * created_at : timestamptz
+  }
+
+  entity "食材\ningredient" as ingredient {
+    * id : bigint <<PK>>
+    --
+    * name : varchar(100) <<UQ>>
+    * category_id : bigint <<FK>>
+    * unit : varchar(16)
+    * storage_method : varchar(32)
+    * safety_stock_quantity : numeric(12,3)
+    * is_active : boolean
+    * created_at : timestamptz
+  }
+
+  entity "供應商\nsupplier" as supplier {
+    * id : bigint <<PK>>
+    --
+    * name : varchar(100)
+      contact_person : varchar(100)
+      phone : varchar(32)
+      other_contact : varchar(255)
+    * is_active : boolean
+  }
+
+  entity "儲存位置\nstorage_location" as storage_location {
+    * id : bigint <<PK>>
+    --
+    * code : varchar(32) <<UQ>>
+    * name : varchar(100)
+    * storage_type : varchar(32)
+      description : text
+    * is_active : boolean
+  }
+
+}
+package "進貨" #ECFDF5 {
+  entity "進貨單\ngoods_receipt" as goods_receipt {
+    * id : bigint <<PK>>
+    --
+    * supplier_id : bigint <<FK>>
+    * receipt_date : date
+    * status : varchar(32)
+    * created_by_id : bigint <<FK>>
+    * created_at : timestamptz
+      confirmed_at : timestamptz
+  }
+
+  entity "進貨明細\ngoods_receipt_item" as goods_receipt_item {
+    * id : bigint <<PK>>
+    --
+    * receipt_id : bigint <<FK>>
+    * ingredient_id : bigint <<FK>>
+      quantity : numeric(12,3)
+      unit_price : numeric(12,2)
+      expiry_date : date
+      location_id : bigint <<FK>>
+      note : text
+  }
+
+}
+package "庫存與追溯" #FFF7ED {
+  entity "庫存批次\ninventory_batch" as inventory_batch {
+    * id : bigint <<PK>>
+    --
+    * batch_number : varchar(32) <<UQ>>
+    * source_item_id : bigint <<FK>> <<UQ>>
+    * ingredient_id : bigint <<FK>>
+    * expiry_date : date
+    * received_date : date
+    * current_location_id : bigint <<FK>>
+      unit_price : numeric(12,2)
+    * initial_quantity : numeric(12,3)
+    * remaining_quantity : numeric(12,3)
+  }
+
+  entity "庫存異動\ninventory_transaction" as inventory_transaction {
+    * id : bigint <<PK>>
+    --
+    * operation_group_id : uuid
+    * batch_id : bigint <<FK>>
+    * type : varchar(32)
+    * quantity_delta : numeric(12,3)
+    * quantity_before : numeric(12,3)
+    * quantity_after : numeric(12,3)
+    * operator_id : bigint <<FK>>
+    * occurred_at : timestamptz
+    * reason : text
+    * is_non_fefo : boolean
+      reverses_transaction_id : bigint <<FK>> <<UQ>>
+  }
+
+  entity "報廢紀錄\nwaste_record" as waste_record {
+    * id : bigint <<PK>>
+    --
+    * batch_id : bigint <<FK>>
+    * transaction_id : bigint <<FK>> <<UQ>>
+    * quantity : numeric(12,3)
+    * reason : varchar(32)
+      note : text
+      loss_amount : numeric(14,2)
+    * operator_id : bigint <<FK>>
+    * occurred_at : timestamptz
+  }
+
+  entity "位置變更紀錄\nbatch_location_change" as batch_location_change {
+    * id : bigint <<PK>>
+    --
+    * batch_id : bigint <<FK>>
+    * from_location_id : bigint <<FK>>
+    * to_location_id : bigint <<FK>>
+    * operator_id : bigint <<FK>>
+    * occurred_at : timestamptz
+    * reason : text
+  }
+
+}
+package "預警設定" #F5F3FF {
+  entity "預警設定\nalert_setting" as alert_setting {
+    * id : bigint <<PK>>
+    --
+    * name : varchar(100)
+    * warning_days : integer
+    * created_at : timestamptz
+    * updated_at : timestamptz
+      updated_by_id : bigint <<FK>>
+  }
+
+}
+employee |o..o{ alert_setting : updated_by_id
+inventory_batch ||--o{ batch_location_change : batch_id
+storage_location ||--o{ batch_location_change : from_location_id
+employee ||..o{ batch_location_change : operator_id
+storage_location ||--o{ batch_location_change : to_location_id
+employee ||..o{ goods_receipt : created_by_id
+supplier ||--o{ goods_receipt : supplier_id
+ingredient ||--o{ goods_receipt_item : ingredient_id
+storage_location |o--o{ goods_receipt_item : location_id
+goods_receipt ||--o{ goods_receipt_item : receipt_id
+ingredient_category ||--o{ ingredient : category_id
+storage_location ||--o{ inventory_batch : current_location_id
+ingredient ||--o{ inventory_batch : ingredient_id
+goods_receipt_item ||--o| inventory_batch : source_item_id
+inventory_batch ||--o{ inventory_transaction : batch_id
+employee ||..o{ inventory_transaction : operator_id
+inventory_transaction |o--o| inventory_transaction : reverses_transaction_id
+inventory_batch ||--o{ waste_record : batch_id
+employee ||..o{ waste_record : operator_id
+inventory_transaction ||--o| waste_record : transaction_id
+
+legend bottom left
+  PK 主鍵｜FK 外鍵｜UQ 單欄唯一
+  欄位前 ●（原始碼 *）表示 NOT NULL；無圓點表示可空
+  || = 1；|o / o| = 0..1；o{ = 0..N
+  虛線仍是實際 FK，僅區分員工建立／操作／更新的追溯關係
+  複合唯一：(operation_group_id, batch_id)，詳見欄位說明
+  基數依現有 schema；確認入庫等業務限制另由 Service 檢查
+endlegend
+@enduml
