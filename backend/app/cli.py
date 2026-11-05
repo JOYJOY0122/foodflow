@@ -1,8 +1,10 @@
 """管理指令。用法：uv run python -m app.cli <verify-stock|seed-demo [--reset]>"""
 
 import argparse
+import getpass
 import secrets
 import sys
+import warnings
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
@@ -10,6 +12,7 @@ from decimal import Decimal
 from uuid import uuid4
 
 from pwdlib import PasswordHash
+from pydantic import ValidationError
 from sqlalchemy import delete, exists, func, select
 from sqlalchemy.orm import Session
 
@@ -18,6 +21,7 @@ from app.core.config import get_settings
 from app.core.db import get_session_factory
 from app.core.dependencies import get_clock
 from app.core.enums import EmployeeRole, GoodsReceiptStatus, StorageType, TransactionType
+from app.core.errors import DomainError
 from app.core.uow import SqlAlchemyUnitOfWork
 from app.db.base import Base
 from app.db.models import (
@@ -33,6 +37,8 @@ from app.db.models import (
     Supplier,
     WasteRecord,
 )
+from app.modules.auth.dependencies import build_auth_service
+from app.modules.auth.schemas import EmployeeCreate
 from app.modules.inventory.ledger import StockOp
 from app.modules.inventory.ledger_sqlalchemy import SqlAlchemyStockLedger
 
@@ -310,9 +316,47 @@ def _seed_demo(*, reset: bool) -> int:
     return 0
 
 
+def _create_admin() -> int:
+    try:
+        username = input("管理者帳號：")
+        name = input("管理者姓名：")
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", getpass.GetPassWarning)
+            password = getpass.getpass("密碼（8～128 字元）：")
+            confirmation = getpass.getpass("再次輸入密碼：")
+        if password != confirmation:
+            print("兩次密碼不一致，未建立帳號", file=sys.stderr)
+            return 1
+        body = EmployeeCreate(
+            username=username, name=name, password=password, role=EmployeeRole.ADMIN
+        )
+        settings = get_settings()
+        with get_session_factory()() as session:
+            service = build_auth_service(
+                session, SqlAlchemyUnitOfWork(session), get_clock(settings), settings
+            )
+            service.bootstrap_admin(username=body.username, name=body.name, password=body.password)
+    except getpass.GetPassWarning:
+        print("無法隱藏密碼輸入，請使用互動式終端機；未建立帳號", file=sys.stderr)
+        return 1
+    except ValidationError:
+        # ValidationError.__str__ includes input values: never print credentials.
+        print("帳號與姓名必填且須符合長度限制；密碼須為 8～128 字元", file=sys.stderr)
+        return 1
+    except DomainError as exc:
+        print(exc.message, file=sys.stderr)
+        return 1
+    except (EOFError, KeyboardInterrupt):
+        print("已取消建立管理者", file=sys.stderr)
+        return 1
+    print("管理者已建立，請使用該帳號登入")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m app.cli", description="FoodFlow 管理指令")
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("create-admin", help="以隱藏密碼輸入建立管理者")
     commands.add_parser("verify-stock", help="核對批次剩餘量與異動紀錄")
     seed_demo = commands.add_parser("seed-demo", help="灌入示範資料（production 時拒絕執行）")
     seed_demo.add_argument(
@@ -321,6 +365,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="先清空帳號與預警設定以外的所有資料，再重灌",
     )
     args = parser.parse_args(argv)
+
+    if args.command == "create-admin":
+        return _create_admin()
 
     if args.command == "verify-stock":
         return _verify_stock()

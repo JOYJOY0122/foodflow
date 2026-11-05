@@ -13,9 +13,18 @@ from app.main import API_PREFIX, create_app
 from app.modules.auth.dependencies import get_current_employee
 
 # 公開端點只有在這裡明確列出才可以存在；謝文佳加登入端點時補上。
-PUBLIC_API_PATHS: set[str] = set()
+PUBLIC_API_PATHS: set[str] = {"/api/v1/auth/login"}
 # 正式 app 的完整路由：骨架不提供任何業務端點。
-PRODUCTION_API_ROUTES: set[tuple[str, str]] = {("GET", "/health")}
+PRODUCTION_API_ROUTES: set[tuple[str, str]] = {
+    ("GET", "/health"),
+    ("POST", "/api/v1/auth/login"),
+    ("GET", "/api/v1/auth/me"),
+    ("POST", "/api/v1/auth/logout"),
+    ("GET", "/api/v1/employees"),
+    ("POST", "/api/v1/employees"),
+    ("PATCH", "/api/v1/employees/{employee_id}"),
+    ("POST", "/api/v1/employees/{employee_id}/password"),
+}
 
 
 class Payload(BaseModel):
@@ -68,13 +77,19 @@ def test_every_api_route_requires_login_unless_explicitly_public() -> None:
             assert not _depends_on_current_employee(route)
         else:
             assert _depends_on_current_employee(route), f"{route.path} 沒有驗證"
+    assert {
+        (method, route.path)
+        for route in api_routes
+        if not _depends_on_current_employee(route)
+        for method in route.methods
+    } == {("POST", "/api/v1/auth/login")}
 
     # 確認偵測本身有效：根路徑的 /health 不需要登入。
     health = next(route for route in _api_routes(app) if route.path == "/health")
     assert not _depends_on_current_employee(health)
 
 
-def test_production_app_has_no_business_routes(tmp_path: Path) -> None:
+def test_production_app_has_exact_declared_routes(tmp_path: Path) -> None:
     app = create_app(frontend_dist=tmp_path / "missing")
     routes = {
         (method, route.path)

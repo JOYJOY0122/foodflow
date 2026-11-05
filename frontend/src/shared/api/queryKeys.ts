@@ -9,7 +9,11 @@ const MAX_QUERY_RETRIES = 3;
 export const queryKeys = {
   health: { all: ["health"] },
   auth: { all: ["auth"] },
-  employees: { all: ["employees"] },
+  employees: {
+    all: ["employees"],
+    list: (filters: { search: string; role: string; status: string; page: number }) =>
+      ["employees", filters] as const,
+  },
   masterData: { all: ["master-data"] },
   storageLocations: { all: ["storage-locations"] },
   goodsReceipt: { all: ["goods-receipt"] },
