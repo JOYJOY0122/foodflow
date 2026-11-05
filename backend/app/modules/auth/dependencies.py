@@ -1,8 +1,4 @@
-"""AD-15 的身分驗證 stub：驗 cookie JWT 並查 Employee，不提供登入端點。
-
-謝文佳接手時補登入端點與 token 簽發。簽發時 sub 必須是 str(employee.id)，
-exp 由 clock.now() 計算。
-"""
+"""AD-15: cookie authentication and auth service composition."""
 
 import jwt
 from fastapi import Depends, Request
@@ -10,12 +6,30 @@ from sqlalchemy.orm import Session
 
 from app.core.clock import Clock
 from app.core.config import Settings, get_settings
-from app.core.dependencies import get_clock, get_session
+from app.core.dependencies import get_clock, get_session, get_uow
 from app.core.enums import EmployeeRole, ErrorCode
 from app.core.errors import DomainError
+from app.core.uow import UnitOfWork
 from app.db.models import Employee
+from app.modules.auth.repository_sqlalchemy import SqlAlchemyAuthRepository
+from app.modules.auth.service import AuthService
 
 JWT_ALGORITHM = "HS256"
+
+
+def build_auth_service(
+    session: Session, uow: UnitOfWork, clock: Clock, settings: Settings
+) -> AuthService:
+    return AuthService(SqlAlchemyAuthRepository(session), uow, clock, settings)
+
+
+def get_auth_service(
+    session: Session = Depends(get_session),
+    uow: UnitOfWork = Depends(get_uow),
+    clock: Clock = Depends(get_clock),
+    settings: Settings = Depends(get_settings),
+) -> AuthService:
+    return build_auth_service(session, uow, clock, settings)
 
 
 def _unauthenticated() -> DomainError:

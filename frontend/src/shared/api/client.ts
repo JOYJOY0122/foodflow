@@ -34,6 +34,8 @@ export interface RequestOptions {
   /** 視為正常回應、不丟 ApiError 的非 2xx 狀態碼，例如 /health 的 503。 */
   acceptStatuses?: readonly number[];
   signal?: AbortSignal;
+  /** Auth screens handle a missing/failed session inline. */
+  redirectOnUnauthorized?: boolean;
 }
 
 function isErrorResponse(value: unknown): value is { error: ErrorBody } {
@@ -74,7 +76,8 @@ function redirectToLogin(): void {
 
 /** path 是完整路徑；業務 API 請用 `${API_PREFIX}/...`。 */
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { method = "GET", body, idempotencyKey, acceptStatuses = [], signal } = options;
+  const { method = "GET", body, idempotencyKey, acceptStatuses = [], signal,
+    redirectOnUnauthorized = true } = options;
   const headers: Record<string, string> = { Accept: "application/json" };
   if (body !== undefined) {
     headers["Content-Type"] = "application/json";
@@ -112,7 +115,10 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
   }
 
   if (response.status === 401) {
-    redirectToLogin();
+    if (path !== `${API_PREFIX}/auth/login`) {
+      window.dispatchEvent(new Event("foodflow:unauthorized"));
+    }
+    if (redirectOnUnauthorized) redirectToLogin();
   }
   if (isErrorResponse(payload)) {
     throw new ApiError(response.status, payload.error);

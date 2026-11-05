@@ -71,8 +71,11 @@ docker compose exec db psql -U foodflow -c "CREATE DATABASE foodflow_test"
 ```bash
 cd backend
 uv run alembic upgrade head
+uv run python -m app.cli create-admin
 uv run uvicorn app.main:create_app --factory --reload
 ```
+
+`create-admin` 會互動詢問帳號、姓名與兩次密碼（密碼輸入不顯示）。帳號與姓名必填；密碼為 8～128 字元且不裁切空白。沒有預設帳密，也不提供公開註冊；後續員工由管理者在「員工帳號」頁新增。請勿將密碼放在命令列或版本控制中。
 
 Schema 只由 Alembic 變更，應用程式啟動時不會自動執行 migration。確認：`curl http://localhost:8000/health` 回 `{"status":"ok","database":"ok"}`。
 
@@ -86,7 +89,7 @@ npm ci
 npm run dev
 ```
 
-打開 http://localhost:5173 ，首頁會顯示後端狀態。Vite 把 `/api` 與 `/health` 轉送到後端，所以維持同源、不開 CORS。
+打開 http://localhost:5173 ，先以建立的管理者登入，首頁會顯示後端狀態。管理者可搜尋、新增、編輯、停用員工及重設密碼；帳號建立後固定。停用、降權、重設密碼及登出會使舊登入失效，最後一位有效管理者不能停用或降權。Vite 把 `/api` 與 `/health` 轉送到後端，所以維持同源、不開 CORS。
 
 ## 測試與檢查
 

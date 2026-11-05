@@ -21,6 +21,8 @@ from app.core.errors import (
     error_payload,
 )
 from app.modules.auth.dependencies import get_current_employee
+from app.modules.auth.router import public_router as auth_public_router
+from app.modules.auth.router import router as auth_router
 from app.modules.health.router import router as health_router
 
 logger = logging.getLogger(__name__)
@@ -143,9 +145,11 @@ def create_app(
         dependencies=[Depends(get_current_employee)],
         responses=ERROR_RESPONSES,
     )
+    api_router.include_router(auth_router)
     for router in extra_api_routers:
         api_router.include_router(router)
     app.include_router(api_router)
+    app.include_router(auth_public_router, prefix=API_PREFIX)
 
     app.include_router(health_router)
     _mount_frontend(app, frontend_dist)
