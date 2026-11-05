@@ -1,0 +1,13 @@
+# AI 使用佐證（自動產生）
+
+每次 Claude Code 對話結束時自動產生。每個資料夾有 `transcript.md`（完整文字稿）、`rows.md`（AI 起草的紀錄列，要本人確認）與 `turn-NN.png`（紀錄列引用到的對話卡片圖），G 文件直接引用。
+
+彙整成 Excel：`node scripts/ai-evidence/build-log.mjs` → `docs/G-AI使用紀錄.xlsx`。
+
+| 日期 | 成員 | 分支 | 主題（第一個指令） | 輪數 | 資料夾 |
+| --- | --- | --- | --- | --- | --- |
+| 2026-10-29 20:17 | 黃予岑 |  | /bmad-help | 3 | [20261029-mintguesss-17268418](20261029-mintguesss-17268418/) |
+| 2026-10-29 20:21 | 黃予岑 |  | /bmad-agent-analyst | 19 | [20261029-mintguesss-36a12b47](20261029-mintguesss-36a12b47/) |
+| 2026-11-05 02:16 | 黃予岑 | docs/architecture | 依 README 的開發環境需求檢查並安裝：用 uv 安裝 Python 3.1… | 3 | [20261105-mintguesss-0b97d4d3](20261105-mintguesss-0b97d4d3/) |
+| 2026-11-05 02:33 | 黃予岑 | chore/skeleton | /bmad-agent-dev | 13 | [20261105-mintguesss-502997a0](20261105-mintguesss-502997a0/) |
+| 2026-11-05 14:30 | 黃予岑 | chore/seed-demo | /bmad-agent-dev | 2 | [20261105-mintguesss-470d0799](20261105-mintguesss-470d0799/) |

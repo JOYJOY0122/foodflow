@@ -29,3 +29,9 @@ _bmad/config.user.toml
 
 # 本機工具（plantuml.jar 等）
 tools/
+
+# AI 佐證自動化的處理紀錄
+docs/ai-evidence/.capture.log
+
+# Office 開啟檔案時的暫存鎖檔
+~$*

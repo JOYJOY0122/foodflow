@@ -1,0 +1,14 @@
+{
+  "name": "foodflow-ai-evidence",
+  "private": true,
+  "type": "module",
+  "description": "自動把 Claude Code 對話轉成文件 G 的佐證（文字稿、對話卡片圖、紀錄列草稿）並彙整成 Excel",
+  "scripts": {
+    "capture": "node capture.mjs --all",
+    "build": "node build-log.mjs"
+  },
+  "dependencies": {
+    "exceljs": "4.4.0",
+    "playwright-core": "1.64.1"
+  }
+}

@@ -46,6 +46,14 @@ uv run python -c "import secrets; print(secrets.token_urlsafe(48))"
 cd ..
 ```
 
+安裝 AI 使用紀錄自動化工具（文件 G 用，見 [scripts/ai-evidence/README.md](scripts/ai-evidence/README.md)）：
+
+```powershell
+cd scripts/ai-evidence
+npm install
+cd ../..
+```
+
 ### 2. 資料庫
 
 ```bash

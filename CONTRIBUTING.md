@@ -42,7 +42,9 @@ test(inventory): 新增批次報廢測試
 
 - 使用 BMAD skill。
 - 每個 workflow 開新對話。
-- 每次用 AI 都要記錄到 `docs/ai-log.md`，尤其是 AI 錯在哪裡。
+- AI 使用紀錄自動產生：每次 Claude Code 對話結束（`/clear` 或關掉 Claude 分頁），會在 `docs/ai-evidence/` 產生文字稿與對話圖。
+- commit 前跑 `node scripts/ai-evidence/capture.mjs --all` 起草紀錄列 `rows.md`，打開自己新產生的 `rows.md`，補上「人工判斷與修正」與「採用程度」，確認後把狀態改成「已確認」，跟程式一起 commit。說明見 [scripts/ai-evidence/README.md](scripts/ai-evidence/README.md)。
+- 在 Claude Code 以外用 AI（網頁、手機），自己截圖並補一列。`docs/ai-log.md` 保留早期紀錄，不再新增。
 - 看不懂的 AI 程式碼不准 commit。
 - `_bmad-output` 要 commit。
 
