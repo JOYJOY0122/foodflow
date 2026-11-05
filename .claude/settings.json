@@ -3,5 +3,18 @@
   "attribution": {
     "commit": "",
     "pr": ""
+  },
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/ai-evidence/capture.mjs\" --hook",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
   }
 }
