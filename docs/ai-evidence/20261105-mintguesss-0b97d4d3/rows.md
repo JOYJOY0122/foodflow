@@ -12,11 +12,11 @@
 - AI 工具／BMad 技能：
 - Prompt 重點：
 - AI 產出摘要：
-- 人工判斷與修正：（待本人補充）
+- 人工判斷與修正：本人依 README 指定版本（Python 3.13、Node 24、Docker），要求 AI 安裝後印出各工具版本確認
 - 採用程度：直接採用
 - 截圖／檔案：docs/ai-evidence/20261105-mintguesss-0b97d4d3/turn-01.png、docs/ai-evidence/20261105-mintguesss-0b97d4d3/transcript.md
 - 對應文件章節：A 專案管理
-- 狀態：待確認
+- 狀態：已確認
 
 ## 2
 
@@ -31,7 +31,7 @@
 - 採用程度：直接採用
 - 截圖／檔案：docs/ai-evidence/20261105-mintguesss-0b97d4d3/turn-02.png、docs/ai-evidence/20261105-mintguesss-0b97d4d3/transcript.md
 - 對應文件章節：A 專案管理
-- 狀態：待確認
+- 狀態：已確認
 
 ## 3
 
@@ -46,4 +46,4 @@
 - 採用程度：直接採用
 - 截圖／檔案：docs/ai-evidence/20261105-mintguesss-0b97d4d3/turn-02.png、docs/ai-evidence/20261105-mintguesss-0b97d4d3/turn-03.png、docs/ai-evidence/20261105-mintguesss-0b97d4d3/transcript.md
 - 對應文件章節：A 專案管理
-- 狀態：待確認
+- 狀態：已確認
