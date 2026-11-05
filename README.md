@@ -112,8 +112,33 @@ git diff --exit-code -- src/shared/api/schema.d.ts
 | 新增 migration | `uv run alembic revision --autogenerate -m "說明"`，檢查產物後再 commit | `backend/` |
 | 改 API 後更新前端型別 | `npm run gen:api`，並提交 `schema.d.ts`；衝突時不手動合併，rebase 後重新產生 | `frontend/` |
 | 庫存核對 | `uv run python -m app.cli verify-stock`，有差異時以非零狀態結束 | `backend/` |
+| 灌示範資料 | `uv run python -m app.cli seed-demo`，說明見下方 | `backend/` |
 | Demo（單一 port） | 先在 `frontend/` 執行 `npm run build`，再於 `backend/` 執行 `uv run uvicorn app.main:create_app --factory --host 0.0.0.0`，打開 http://localhost:8000 （區網裝置改用本機 IP） | |
 | 固定時間測跨日 | `.env` 設 `APP_FIXED_NOW=2026-11-18T09:00:00+08:00`（`APP_ENV=production` 時無效） | |
+
+### 示範資料
+
+資料庫要已啟動並跑過 `uv run alembic upgrade head`。在 `backend/` 內執行（`APP_ENV=production` 時拒絕執行）：
+
+```bash
+uv run python -m app.cli seed-demo          # 資料庫已有資料時只提示，不做任何變更
+uv run python -m app.cli seed-demo --reset  # 清空後重灌
+uv run python -m app.cli verify-stock       # 灌完後應顯示「庫存核對通過」
+```
+
+內容是 2 個儲存位置、3 個供應商、4 個分類、10 種食材與 2 張已確認進貨單，涵蓋下列情境：
+
+| 情境 | 食材 |
+| --- | --- |
+| 已過期 | 鮮奶（其中一批，另有正常批次） |
+| 今日到期 | 鮮奶油 |
+| 即期 | 雞胸肉（其中一批）、鮭魚片 |
+| 正常 | 雞胸肉（其中一批）、豬里肌、高麗菜、白米、醬油等 |
+| 低於安全庫存量 | 雞蛋、沙拉油 |
+
+- **日期：** 以 Clock 的當天（Asia/Taipei）相對計算，並依目前的預警天數調整，所以 `APP_FIXED_NOW` 也有效。到期狀態會隨日期變化，隔天或改過預警天數後，要重現上表的情境請加 `--reset` 重灌。預警天數為 0 時依規則不會有即期批次，指令會提示。
+- **`--reset` 的範圍：** 會刪除帳號與預警設定以外的**所有**資料，包含你手動建立的進貨單、異動與報廢紀錄，無法復原。帳號與預警設定會保留。
+- **操作者：** 異動記在停用的 `demo-seed` 帳號（顯示為「示範資料」）名下，這個帳號是停用的，無法登入，`--reset` 也不會刪除它。
 
 模組分層與規則見 [架構主幹](_bmad-output/planning-artifacts/architecture/architecture-foodflow-2026-11-05/ARCHITECTURE-SPINE.md)。寫新模組時可參考 `backend/app/modules/health/`（router → service → repository 的完整範例）；前端參考 `frontend/src/features/health/`。
 
