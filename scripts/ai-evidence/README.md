@@ -17,6 +17,13 @@
 
 起草不放在對話結束時自動做，是因為 Windows 結束對話時會中斷 Claude Code 底下的程序，起草會被打斷。
 
+## 用 Codex 的人
+
+- **紀錄一樣會抓**：Codex 的對話存在 `~/.codex/sessions/`，`--all` 會自動找出在本專案資料夾裡進行的對話，文字稿、對話圖、`rows.md` 都跟 Claude Code 一樣。
+- **但不會在對話結束時自動觸發**（Codex 沒有這種 hook），所以 commit 前一定要跑 `node scripts/ai-evidence/capture.mjs --all`。
+- 起草紀錄列會優先用你本機的 `codex exec`（唯讀、不留紀錄），沒有的話改用 `claude -p`；也可以用 `--drafter codex` 指定。
+- 在 Codex 裡叫 BMAD 用 `$bmad-agent-dev` 這種寫法，skill 放在 `.agents/skills/`。
+
 ## 第一次設定（每人一次）
 
 ```powershell

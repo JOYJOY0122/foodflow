@@ -7,7 +7,7 @@
 //   node scripts/ai-evidence/capture.mjs --transcript <檔案.jsonl>   只處理一個紀錄檔
 // 其他選項：--png-all（每一輪都產圖，預設只替紀錄列引用的輪次產圖）、--no-png（不產圖）、--no-rows（不請 AI 起草紀錄列）、--force（全部重產）、--out <資料夾>（預設 docs/ai-evidence）
 //
-// 紀錄列草稿（rows.md）由本機的 `claude -p` 依文字稿起草，「人工判斷與修正」一定要本人確認後把狀態改成「已確認」。
+// 紀錄列草稿（rows.md）由本機的 `claude -p` 或 `codex exec` 依文字稿起草（--drafter claude|codex 可指定），「人工判斷與修正」一定要本人確認後把狀態改成「已確認」。
 // 已確認的 rows.md 不會再被覆寫。
 
 import { execFileSync, spawn, spawnSync } from "node:child_process";
@@ -58,23 +58,44 @@ function readLines(file) {
 }
 
 function transcriptCwd(file) {
-  for (const entry of readLines(file)) if (entry.cwd) return entry.cwd;
+  for (const entry of readLines(file)) {
+    if (entry.cwd) return entry.cwd;
+    if (entry.payload?.cwd) return entry.payload.cwd; // Codex 的 session_meta、turn_context
+  }
   return null;
 }
 
+function walkJsonl(dir, out = []) {
+  if (!fs.existsSync(dir)) return out;
+  for (const name of fs.readdirSync(dir)) {
+    const full = path.join(dir, name);
+    if (fs.statSync(full).isDirectory()) walkJsonl(full, out);
+    else if (name.endsWith(".jsonl")) out.push(full);
+  }
+  return out;
+}
+
 function findProjectTranscripts(root) {
-  const base = path.join(os.homedir(), ".claude", "projects");
-  if (!fs.existsSync(base)) return [];
   const found = [];
-  for (const dir of fs.readdirSync(base)) {
-    const full = path.join(base, dir);
-    if (!fs.statSync(full).isDirectory()) continue;
-    for (const name of fs.readdirSync(full)) {
-      if (!name.endsWith(".jsonl")) continue;
-      const file = path.join(full, name);
-      const cwd = transcriptCwd(file);
-      if (cwd && samePath(cwd, root)) found.push(file);
+  // Claude Code：~/.claude/projects/<專案>/*.jsonl（子資料夾是 subagent，略過）
+  const claudeBase = path.join(os.homedir(), ".claude", "projects");
+  if (fs.existsSync(claudeBase)) {
+    for (const dir of fs.readdirSync(claudeBase)) {
+      const full = path.join(claudeBase, dir);
+      if (!fs.statSync(full).isDirectory()) continue;
+      for (const name of fs.readdirSync(full)) {
+        if (!name.endsWith(".jsonl")) continue;
+        const file = path.join(full, name);
+        const cwd = transcriptCwd(file);
+        if (cwd && samePath(cwd, root)) found.push(file);
+      }
     }
+  }
+  // Codex：~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl
+  const codexBase = path.join(process.env.CODEX_HOME ?? path.join(os.homedir(), ".codex"), "sessions");
+  for (const file of walkJsonl(codexBase)) {
+    const cwd = transcriptCwd(file);
+    if (cwd && samePath(cwd, root)) found.push(file);
   }
   return found;
 }
@@ -124,12 +145,77 @@ function askAnswer(result) {
   return m ? m[1].trim() : "";
 }
 
+// Codex 的對話紀錄（rollout-*.jsonl）：每行是 session_meta、response_item、event_msg 等
+function isCodexTranscript(entries) {
+  return entries.some((e) => e.type === "session_meta" || e.type === "response_item" || e.type === "turn_context");
+}
+
+const CODEX_INJECTED = /^(<environment_context>|<user_instructions>|<permissions instructions>|# AGENTS\.md|<INSTRUCTIONS>)/;
+
+function parseCodexTurns(entries) {
+  const meta = { sessionId: null, branch: null, started: null, ended: null, cwd: null, tool: "Codex" };
+  const turns = [];
+  let current = null;
+  const items = entries.map((e) => (e.type === "response_item" ? { ...e.payload, timestamp: e.timestamp } : e));
+  const hasResponseUser = items.some((it) => it.type === "message" && it.role === "user");
+
+  for (const e of entries) {
+    if (e.timestamp) {
+      meta.started ??= e.timestamp;
+      meta.ended = e.timestamp;
+    }
+    if (e.type === "session_meta") {
+      meta.sessionId = e.payload?.id ?? meta.sessionId;
+      meta.cwd = e.payload?.cwd ?? meta.cwd;
+      meta.branch = e.payload?.git?.branch ?? meta.branch;
+    }
+  }
+
+  for (const it of items) {
+    const text = (blocks) =>
+      (Array.isArray(blocks) ? blocks : [])
+        .map((b) => b?.text ?? "")
+        .join("\n")
+        .trim();
+
+    let userText = null;
+    if (it.type === "message" && it.role === "user") userText = text(it.content);
+    else if (!hasResponseUser && it.type === "event_msg" && it.payload?.type === "user_message") userText = String(it.payload.message ?? "").trim();
+    if (userText !== null) {
+      if (!userText || CODEX_INJECTED.test(userText)) continue;
+      current = { time: it.timestamp, prompt: cleanUserText(userText), items: [] };
+      turns.push(current);
+      continue;
+    }
+    if (!current) continue;
+
+    if (it.type === "message" && it.role === "assistant") {
+      const t = text(it.content);
+      if (!t) continue;
+      const last = current.items.at(-1);
+      if (last?.kind === "text") last.text += "\n\n" + t;
+      else current.items.push({ kind: "text", text: t });
+    } else if (it.type === "function_call" || it.type === "custom_tool_call" || it.type === "local_shell_call") {
+      let input = it.arguments ?? it.input ?? it.action ?? "";
+      try {
+        if (typeof input === "string" && input.trim().startsWith("{")) input = JSON.parse(input);
+      } catch {
+        /* 保留原字串 */
+      }
+      if (input && Array.isArray(input.command)) input = { command: input.command.join(" ") };
+      const shown = typeof input === "string" ? { command: input.split("\n")[0] } : input;
+      current.items.push({ kind: "tool", name: it.name ?? it.type, text: shortInput(it.name, shown) });
+    }
+  }
+  return { meta, turns: turns.filter((t) => t.prompt.trim() || t.items.length) };
+}
+
 // 一輪＝使用者一次輸入，加上 AI 到下一次輸入前的所有回覆與工具呼叫
 function parseTurns(entries) {
   const turns = [];
   let current = null;
   const toolNames = new Map();
-  const meta = { sessionId: null, branch: null, started: null, ended: null, cwd: null };
+  const meta = { sessionId: null, branch: null, started: null, ended: null, cwd: null, tool: "Claude Code" };
 
   for (const e of entries) {
     if (e.isSidechain) continue;
@@ -211,6 +297,7 @@ function toMarkdown(info, turns) {
     `- 成員：${info.user}`,
     `- 時間：${info.start} ～ ${info.end}`,
     `- 分支：${info.branch ?? "（未記錄）"}`,
+    `- AI 工具：${info.tool}`,
     `- Session：${info.sessionId}`,
     "",
     "> 由 `scripts/ai-evidence/capture.mjs` 自動產生，工具呼叫只列摘要，密碼等機密已遮蔽。",
@@ -300,7 +387,7 @@ function turnHtml(info, turn, index, total) {
   </style></head><body><div class="card" id="card">
   <div class="top"><span>${esc(info.title)}　第 ${index} / ${total} 輪</span><span>${esc(info.user)}　${esc(localDate(turn.time).text)}${info.branch ? "　" + esc(info.branch) : ""}</span></div>
   <div class="body"><div class="who">我們</div><div class="user">${esc(redact(turn.prompt) || "（無文字）")}</div>
-  <div class="who">Claude</div>${items || '<div class="tool">（無回覆）</div>'}</div></div></body></html>`;
+  <div class="who">${esc(info.tool ?? "AI")}</div>${items || '<div class="tool">（無回覆）</div>'}</div></div></body></html>`;
 }
 
 async function loadBrowser() {
@@ -382,7 +469,7 @@ function digestForModel(turns) {
 }
 
 function draftPrompt(info, digest) {
-  return `你是軟體工程課程的助教。以下是學生「${info.member}」使用 AI 開發「食序 FoodFlow」的一段對話紀錄（${info.start}）。
+  return `你是軟體工程課程的助教。以下是學生「${info.member}」使用 AI（${info.tool}）開發「食序 FoodFlow」的一段對話紀錄（${info.start}）。
 請整理成課程文件 G「AI 使用紀錄」的紀錄列。一段對話可能包含多個任務；同一任務來回很多次合併成一列；純閒聊、問指令怎麼打這類小事不要列。
 
 每列欄位：
@@ -432,6 +519,49 @@ function runClaude(prompt) {
   return JSON.parse(m[0]);
 }
 
+function runCodex(prompt) {
+  const out = path.join(os.tmpdir(), `foodflow-ai-evidence-${process.pid}-${Date.now()}.txt`);
+  // --ephemeral：不存這次起草的對話，避免被當成專案對話抓進來；-s read-only：不准改任何檔案
+  const r = spawnSync(`codex exec --skip-git-repo-check --ephemeral -s read-only -o "${out}"`, {
+    input: prompt,
+    cwd: os.tmpdir(),
+    encoding: "utf8",
+    shell: true,
+    env: childEnv(),
+    timeout: 600000,
+    maxBuffer: 10 * 1024 * 1024,
+  });
+  let text = "";
+  try {
+    text = fs.readFileSync(out, "utf8");
+    fs.unlinkSync(out);
+  } catch {
+    /* 沒有輸出檔 */
+  }
+  if (r.status !== 0 || !text) {
+    const why = [r.error?.message, `exit ${r.status}`, r.stderr?.trim().split("\n").slice(-3).join(" ")].filter(Boolean).join("｜");
+    throw new Error(`codex exec 失敗：${why.slice(0, 500)}`);
+  }
+  const m = text.match(/\[[\s\S]*\]/);
+  if (!m) throw new Error("codex exec 沒有回傳 JSON");
+  return JSON.parse(m[0]);
+}
+
+// 起草用哪個 AI：--drafter claude|codex 指定；沒指定時，Codex 的對話先用 codex，其他先用 claude，失敗再換另一個
+function draftWithAvailableAI(prompt, sessionTool) {
+  const forced = valueOf("--drafter");
+  const order = forced ? [forced] : sessionTool === "Codex" ? ["codex", "claude"] : ["claude", "codex"];
+  const errors = [];
+  for (const name of order) {
+    try {
+      return name === "codex" ? runCodex(prompt) : runClaude(prompt);
+    } catch (err) {
+      errors.push(err.message);
+    }
+  }
+  throw new Error(errors.join("；"));
+}
+
 export function parseRowsMd(text) {
   const rows = [];
   let cur = null;
@@ -469,7 +599,7 @@ function draftRows(info, turns, folder, folderRel) {
     const existing = parseRowsMd(fs.readFileSync(rowsFile, "utf8"));
     if (existing.some((r) => r["狀態"] === "已確認")) return { note: "已有本人確認的紀錄列，不覆寫", turns: citedTurns(existing) };
   }
-  const raw = runClaude(draftPrompt(info, digestForModel(turns)));
+  const raw = draftWithAvailableAI(draftPrompt(info, digestForModel(turns)), info.tool);
   const rows = raw.map((r) => {
     const shots = (Array.isArray(r["輪次"]) ? r["輪次"] : [])
       .filter((n) => Number.isInteger(n) && n >= 1 && n <= turns.length)
@@ -496,7 +626,7 @@ function citedTurns(rows) {
 
 async function processTranscript(file, root, outDir, opts, browser) {
   const entries = readLines(file);
-  const { meta, turns } = parseTurns(entries);
+  const { meta, turns } = isCodexTranscript(entries) ? parseCodexTurns(entries) : parseTurns(entries);
   if (!turns.length) return { file, skipped: "沒有對話內容" };
   const toolUsed = turns.some((t) => t.items.some((it) => it.kind !== "text"));
   if (turns.length === 1 && turns[0].prompt.trim().length < 15 && !toolUsed) return { file, skipped: "只有一句簡短對話（測試或閒聊）" };
@@ -519,7 +649,7 @@ async function processTranscript(file, root, outDir, opts, browser) {
 
   fs.mkdirSync(folder, { recursive: true });
   const member = memberName(root, user);
-  const info = { title, user: member, member, start: start.text, end: localDate(meta.ended).text, branch: meta.branch, sessionId: meta.sessionId };
+  const info = { title, user: member, member, start: start.text, end: localDate(meta.ended).text, branch: meta.branch, sessionId: meta.sessionId, tool: meta.tool };
   fs.writeFileSync(path.join(folder, "transcript.md"), toMarkdown(info, turns));
 
   // 先請 AI 起草紀錄列，再只替紀錄列引用到的輪次產生圖片（避免 repo 塞滿圖片）
