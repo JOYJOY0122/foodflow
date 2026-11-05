@@ -36,6 +36,27 @@
 
 ---
 
+## 用 story 開工
+
+需求已拆成 9 個 epic、28 個 story，在 `_bmad-output/planning-artifacts/epics.md`；進度在 `_bmad-output/implementation-artifacts/sprint-status.yaml`。兩個檔案都在 repo 裡，`git pull` 後 Claude Code 與 Codex 的 BMAD 都會自動讀到。
+
+| 成員 | Epic | 建議先做 |
+| --- | --- | --- |
+| 黃予岑 Ken | 2 儲存位置、5 FEFO 領用、9 資料保存與期中驗收 | 2.1 管理儲存位置（進貨要用） |
+| 謝文佳 | 1 食材、分類與供應商、7 效期與低庫存預警首頁 | 1.1 管理食材分類 |
+| ChiaJungTien | 3 進貨與確認入庫、4 庫存總覽與批次明細 | 3.1 建立與編輯進貨草稿 |
+| 郭明儒 | 6 報廢與盤點、8 異動查詢與統計 | 6.1 登記報廢 |
+
+每做一個 story：
+
+1. `git switch main` → `git pull` → `git switch -c feat/<模組>`（分支名稱見 `epics.md` 各 epic）
+2. 開新對話叫 BMAD（Claude Code 用 `/`，Codex 用 `$`）：`/bmad-build 做 Story 2.1`
+3. 完成後 `bmad-build` 會把狀態寫進 `sprint-status.yaml`，跟程式一起 commit
+4. commit 前跑 `node scripts/ai-evidence/capture.mjs --all`，確認自己的 `rows.md`
+5. push、開 PR、請一位組員 review
+
+`sprint-status.yaml` 大家都會改，只改自己 story 那幾行；合併時若有衝突，兩邊的狀態都保留。看全組進度：對 BMAD 說「show sprint status」。
+
 ## 黃予岑 Ken（@mintguesss）
 
 **負責範圍**
