@@ -1,0 +1,104 @@
+[project]
+name = "foodflow-backend"
+version = "0.1.0"
+description = "食序 FoodFlow 後端"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "fastapi==0.162.0",
+    "uvicorn==0.54.0",
+    "sqlalchemy==2.1.8",
+    "alembic==1.20.1",
+    "pydantic==2.14.2",
+    "pydantic-settings==2.16.2",
+    "psycopg[binary]==3.3.8",
+    "pyjwt==2.15.1",
+    "pwdlib[argon2]==0.3.1",
+    "tzdata==2026.6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.2.0",
+    "httpx2==2.16.0",
+    "ruff==0.17.3",
+    "import-linter==2.15",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+filterwarnings = ["error"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "TID251"]
+# B008：FastAPI 的 Depends 預設參數是正常寫法。
+ignore = ["B008"]
+
+[tool.ruff.lint.isort]
+# backend/alembic/ 是 migration 目錄，import alembic 指的是第三方套件。
+known-third-party = ["alembic"]
+
+# AD-10：時間只來自 Clock。
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"datetime.datetime.now".msg = "AD-10：請使用注入的 Clock"
+"datetime.datetime.utcnow".msg = "AD-10：請使用注入的 Clock"
+"datetime.datetime.today".msg = "AD-10：請使用注入的 Clock"
+"datetime.date.today".msg = "AD-10：請使用注入的 Clock"
+"sqlalchemy.func.now".msg = "AD-10：查詢需要時間時由 Service 傳入參數"
+"sqlalchemy.func.current_date".msg = "AD-10：查詢需要時間時由 Service 傳入參數"
+"sqlalchemy.func.current_timestamp".msg = "AD-10：查詢需要時間時由 Service 傳入參數"
+
+[tool.ruff.lint.per-file-ignores]
+"app/core/clock.py" = ["TID251"]
+"tests/conftest.py" = ["E402"]
+
+# AD-1。allow_indirect_imports 為必要設定：service → app.db.models → sqlalchemy 是 AD-3 允許的路徑。
+[tool.importlinter]
+root_package = "app"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "router 不可 import Repository 或 sqlalchemy"
+type = "forbidden"
+source_modules = ["app.modules.*.router"]
+forbidden_modules = [
+    "sqlalchemy",
+    "app.modules.*.repository",
+    "app.modules.*.repository_sqlalchemy",
+    "app.modules.inventory.ledger_sqlalchemy",
+]
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "service 不可 import fastapi、sqlalchemy 或具體實作"
+type = "forbidden"
+source_modules = ["app.modules.*.service"]
+forbidden_modules = [
+    "fastapi",
+    "sqlalchemy",
+    "app.modules.*.repository_sqlalchemy",
+    "app.modules.inventory.ledger_sqlalchemy",
+]
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Repository 與 StockLedger 介面不可 import fastapi、sqlalchemy"
+type = "forbidden"
+source_modules = ["app.modules.*.repository", "app.modules.inventory.ledger"]
+forbidden_modules = ["fastapi", "sqlalchemy"]
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Domain 不可 import app.db、fastapi、sqlalchemy"
+type = "forbidden"
+source_modules = ["app.domain"]
+forbidden_modules = ["app.db", "fastapi", "sqlalchemy"]
+allow_indirect_imports = true

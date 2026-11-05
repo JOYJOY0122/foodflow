@@ -1,0 +1,59 @@
+"""API 與資料表共用的列舉（AD-16），會經 OpenAPI 匯出給前端。"""
+
+from enum import StrEnum
+
+
+class EmployeeRole(StrEnum):
+    ADMIN = "ADMIN"
+    STAFF = "STAFF"
+
+
+class StorageType(StrEnum):
+    """食材保存方式與儲存位置類型共用。"""
+
+    REFRIGERATED = "REFRIGERATED"
+    FROZEN = "FROZEN"
+    AMBIENT = "AMBIENT"
+
+
+class GoodsReceiptStatus(StrEnum):
+    DRAFT = "DRAFT"
+    CONFIRMED = "CONFIRMED"
+    REVERSED = "REVERSED"
+
+
+class TransactionType(StrEnum):
+    RECEIPT = "RECEIPT"
+    ISSUE = "ISSUE"
+    WASTE = "WASTE"
+    ADJUSTMENT = "ADJUSTMENT"
+    REVERSAL = "REVERSAL"
+
+
+class WasteReason(StrEnum):
+    EXPIRED = "EXPIRED"
+    SPOILED = "SPOILED"
+    DAMAGED = "DAMAGED"
+    OTHER = "OTHER"
+
+
+class ExpiryStatus(StrEnum):
+    EXPIRED = "EXPIRED"
+    EXPIRES_TODAY = "EXPIRES_TODAY"
+    EXPIRING_SOON = "EXPIRING_SOON"
+    NORMAL = "NORMAL"
+
+
+class ErrorCode(StrEnum):
+    UNAUTHENTICATED = "UNAUTHENTICATED"
+    INVALID_CREDENTIALS = "INVALID_CREDENTIALS"
+    FORBIDDEN = "FORBIDDEN"
+    NOT_FOUND = "NOT_FOUND"
+    INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK"
+    STALE_QUANTITY = "STALE_QUANTITY"
+    STATE_CONFLICT = "STATE_CONFLICT"
+    DUPLICATE = "DUPLICATE"
+    REFERENCED = "REFERENCED"
+    VALIDATION_ERROR = "VALIDATION_ERROR"
+    RULE_VIOLATION = "RULE_VIOLATION"
+    INTERNAL_ERROR = "INTERNAL_ERROR"

@@ -1,0 +1,106 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      db:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: foodflow
+          POSTGRES_PASSWORD: foodflow_ci
+          POSTGRES_DB: foodflow
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U foodflow -d foodflow"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      APP_ENV: test
+      DATABASE_URL: postgresql+psycopg://foodflow:foodflow_ci@127.0.0.1:5432/foodflow
+      TEST_DATABASE_URL: postgresql+psycopg://foodflow:foodflow_ci@127.0.0.1:5432/foodflow_test
+      JWT_SECRET: ci-only-jwt-secret-with-at-least-32-bytes
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: 安裝相依套件
+        run: uv sync --locked
+
+      - name: Ruff
+        run: uv run ruff check .
+
+      - name: import-linter
+        run: uv run lint-imports
+
+      - name: 建立測試資料庫
+        env:
+          PGPASSWORD: foodflow_ci
+        run: psql -h 127.0.0.1 -U foodflow -d foodflow -c "CREATE DATABASE foodflow_test"
+
+      - name: Alembic 單一 head
+        run: test "$(uv run alembic heads | wc -l)" -eq 1
+
+      - name: Alembic upgrade、check、downgrade
+        run: |
+          uv run alembic upgrade head
+          uv run alembic check
+          uv run alembic downgrade base
+
+      - name: pytest
+        run: uv run pytest
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: 安裝相依套件
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: tsc
+        run: npx tsc --noEmit
+
+      - name: vitest
+        run: npx vitest run
+
+      - name: build
+        run: npm run build
+
+      - name: schema.d.ts 差異檢查
+        run: |
+          npm run gen:api
+          git diff --exit-code -- src/shared/api/schema.d.ts

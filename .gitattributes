@@ -1,2 +1,6 @@
 # hook 一律用 LF，否則 Windows（core.autocrlf=true）checkout 後 sh 會執行失敗
 .githooks/* text eol=lf
+# 容器內執行與產生檔一律用 LF
+*.sh text eol=lf
+*.sql text eol=lf
+frontend/src/shared/api/schema.d.ts text eol=lf
