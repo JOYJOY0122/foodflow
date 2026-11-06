@@ -1,8 +1,9 @@
 # AI 對話紀錄：依 README 的開發環境需求檢查並安裝：用 uv 安裝 Python 3.1…
 
 - 成員：黃予岑
-- 時間：2026-11-05 02:16 ～ 2026-11-05 02:24
+- 時間：2026-11-05 02:16 ～ 2026-11-06 03:34
 - 分支：docs/architecture
+- AI 工具：Claude Code
 - Session：0b97d4d3-978d-4d8b-9744-19ce67ffe2cc
 
 > 由 `scripts/ai-evidence/capture.mjs` 自動產生，工具呼叫只列摘要，密碼等機密已遮蔽。

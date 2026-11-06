@@ -27,7 +27,7 @@
 - AI 工具／BMad 技能：Claude Code＋bmad-prd
 - Prompt 重點：使用者指出大餐廳也適用且更有需求，但跨店／連鎖可先排除；另外補上產品名稱「食序 FoodFlow」
 - AI 產出摘要：修改 prd.md 願景、非目標使用者、NFR-5 效能指標（上調至 1000 種食材/20000 批次/30 人同時使用）；addendum.md 同步改名；移除 prd.md 開頭的 BOM 字元
-- 人工判斷與修正：本人檢閱 AI 產出後未再修改
+- 人工判斷與修正：使用者否決「僅限小型餐廳」的範圍限制，明確要求納入不限規模的單一門市獨立餐廳、排除連鎖，並將產品命名為「食序 FoodFlow」
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-07.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-08.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：B 需求分析
