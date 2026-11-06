@@ -37,6 +37,7 @@ def for_update[T: tuple[Any, ...]](stmt: Select[T], *, key_share: bool = False) 
     """所有鎖定查詢的唯一入口。
 
     populate_existing 確保取得鎖後，同一 Session 已載入的物件也會更新成鎖後的值（T2）。
-    key_share 僅供 AD-7 鎖定有效管理者使用。
+    key_share=True 產生 FOR NO KEY UPDATE：不擋 FK 檢查的 KEY SHARE。
+    用於 AD-7 鎖定有效管理者，以及換位置時鎖目標位置。
     """
     return stmt.with_for_update(key_share=key_share).execution_options(populate_existing=True)

@@ -15,7 +15,6 @@ const placeholders = [
   [routes.ingredients, "食材", "謝文佳", "FR-03"],
   [routes.ingredientCategories, "分類", "謝文佳", "FR-03"],
   [routes.suppliers, "供應商", "謝文佳", "FR-04"],
-  [routes.storageLocations, "儲存位置", "黃予岑 Ken", "FR-05"],
 ] as const;
 
 describe("router", () => {

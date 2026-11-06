@@ -15,7 +15,13 @@ export const queryKeys = {
       ["employees", filters] as const,
   },
   masterData: { all: ["master-data"] },
-  storageLocations: { all: ["storage-locations"] },
+  storageLocations: {
+    all: ["storage-locations"],
+    list: (filters: { search: string; storageType: string; status: string; page: number }) =>
+      ["storage-locations", filters] as const,
+    active: ["storage-locations", "active"],
+    batches: (locationId: number) => ["storage-locations", "batches", locationId] as const,
+  },
   goodsReceipt: { all: ["goods-receipt"] },
   inventory: { all: ["inventory"] },
   issue: { all: ["issue"] },

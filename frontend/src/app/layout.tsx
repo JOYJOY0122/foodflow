@@ -75,16 +75,16 @@ export function AppLayout() {
   }
 
   return (
-    <AppShell header={{ height: 72 }} padding="xl" styles={{ main: { background: "#f7f8f2" } }}
+    <AppShell header={{ height: 72 }} padding={{ base: "md", sm: "xl" }} styles={{ main: { background: "#f7f8f2" } }}
       navbar={{ width: 240, breakpoint: NAVBAR_BREAKPOINT, collapsed: { mobile: !mobileOpened, desktop: !desktopOpened } }}>
       <AppShell.Header>
-        <Group h="100%" px="xl" justify="space-between" wrap="nowrap">
+        <Group h="100%" px={{ base: "md", sm: "xl" }} justify="space-between" wrap="nowrap">
           <Group gap="sm" wrap="nowrap">
             <Burger opened={opened} onClick={wide ? toggleDesktop : toggleMobile} size="sm" w={44} h={44} style={{ flexShrink: 0 }}
               aria-label={opened ? "收合導覽列" : "展開導覽列"} aria-expanded={opened} aria-controls={NAVBAR_ID} />
-            <Title order={3} c="forest.8">食序 FoodFlow</Title>
+            <Title order={3} c="forest.8" style={{ whiteSpace: "nowrap" }}>食序 FoodFlow</Title>
           </Group>
-          <Group wrap="nowrap"><Text size="sm" maw={220} truncate title={current.data?.name}>{current.data?.name} · {current.data?.role === "ADMIN" ? "管理者" : "一般員工"}</Text>
+          <Group wrap="nowrap"><Text size="sm" maw={220} truncate visibleFrom="sm" title={current.data?.name}>{current.data?.name} · {current.data?.role === "ADMIN" ? "管理者" : "一般員工"}</Text>
             <Button variant="default" onClick={() => void signOut()} loading={logout.isPending}>登出</Button></Group>
         </Group>
       </AppShell.Header>
