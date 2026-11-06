@@ -14,7 +14,7 @@ from app.modules.auth.dependencies import get_current_employee
 
 # 公開端點只有在這裡明確列出才可以存在；謝文佳加登入端點時補上。
 PUBLIC_API_PATHS: set[str] = {"/api/v1/auth/login"}
-# 正式 app 的完整路由：骨架不提供任何業務端點。
+# 正式 app 的完整路由；新增端點時要同步更新。
 PRODUCTION_API_ROUTES: set[tuple[str, str]] = {
     ("GET", "/health"),
     ("POST", "/api/v1/auth/login"),
@@ -24,6 +24,10 @@ PRODUCTION_API_ROUTES: set[tuple[str, str]] = {
     ("POST", "/api/v1/employees"),
     ("PATCH", "/api/v1/employees/{employee_id}"),
     ("POST", "/api/v1/employees/{employee_id}/password"),
+    ("GET", "/api/v1/storage-locations"),
+    ("POST", "/api/v1/storage-locations"),
+    ("PATCH", "/api/v1/storage-locations/{location_id}"),
+    ("DELETE", "/api/v1/storage-locations/{location_id}"),
 }
 
 

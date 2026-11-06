@@ -1,0 +1,18 @@
+"""AD-2：儲存位置 Service 的組裝點。"""
+
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
+from app.core.dependencies import get_session, get_uow
+from app.core.uow import UnitOfWork
+from app.modules.storage_location.repository_sqlalchemy import (
+    SqlAlchemyStorageLocationRepository,
+)
+from app.modules.storage_location.service import StorageLocationService
+
+
+def get_storage_location_service(
+    session: Session = Depends(get_session),
+    uow: UnitOfWork = Depends(get_uow),
+) -> StorageLocationService:
+    return StorageLocationService(SqlAlchemyStorageLocationRepository(session), uow)
