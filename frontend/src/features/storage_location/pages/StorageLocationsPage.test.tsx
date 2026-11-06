@@ -50,7 +50,7 @@ describe("StorageLocationsPage", () => {
     const { fetchMock } = renderPage(staff);
 
     expect(await screen.findByText("冷藏庫 A")).toBeTruthy();
-    const row = screen.getByText("R-01").closest("tr")!;
+    const row = screen.getByText("R-01").closest("[data-location]") as HTMLElement;
     expect(within(row).getByText("冷藏")).toBeTruthy();
     expect(within(row).getByText("啟用")).toBeTruthy();
     expect(screen.queryByRole("button", { name: "新增位置" })).toBeNull();
@@ -192,8 +192,42 @@ describe("StorageLocationsPage", () => {
 
   async function openBatches() {
     fireEvent.click(await screen.findByRole("button", { name: "查看 R-01 的批次" }));
-    return within(await screen.findByRole("table", { name: "R-01 的批次" }));
+    return within(await screen.findByLabelText("R-01 的批次"));
   }
+
+  it("keeps phone cards short by moving edit and delete into a menu", async () => {
+    // 模擬 390 寬的手機：只有 max-width 查詢成立。
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query.includes("max-width"), media: query, onchange: null,
+      addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {},
+      removeListener: () => {}, dispatchEvent: () => false,
+    }));
+    renderPage(admin, batchHandler());
+
+    const card = within((await screen.findByText("冷藏庫 A")).closest("[data-location]") as HTMLElement);
+    expect(card.queryByRole("button", { name: "編輯 R-01" })).toBeNull();
+    fireEvent.click(card.getByRole("button", { name: "R-01 的操作" }));
+    fireEvent.click(await screen.findByRole("menuitem", { name: "編輯 R-01" }));
+
+    expect(await screen.findByRole("dialog", { name: "編輯儲存位置" })).toBeTruthy();
+  });
+
+  it("scrolls the expanded location to the top so its batches are in view", async () => {
+    renderPage(staff, batchHandler());
+    const card = (await screen.findByText("冷藏庫 A")).closest("[data-location]") as HTMLElement;
+    // 記錄捲動當下批次是否已顯示：第一次展開時要等批次載入、頁面變高後才捲，否則捲不到位。
+    const batchesShown: boolean[] = [];
+    const scrollIntoView = vi.fn(() => { batchesShown.push(!!screen.queryByLabelText("R-01 的批次")); });
+    card.scrollIntoView = scrollIntoView;
+
+    await openBatches();
+    await waitFor(() => expect(scrollIntoView).toHaveBeenCalledWith(expect.objectContaining({ block: "start" })));
+    expect(batchesShown).toEqual([true]);
+
+    scrollIntoView.mockClear();
+    fireEvent.click(screen.getByRole("button", { name: "收合 R-01 的批次" }));
+    expect(scrollIntoView).not.toHaveBeenCalled();
+  });
 
   it("lets staff expand a location to see its stocked batches without move actions", async () => {
     renderPage(staff, batchHandler());
@@ -202,9 +236,47 @@ describe("StorageLocationsPage", () => {
 
     expect(batches.getByText("雞胸肉")).toBeTruthy();
     expect(batches.getByText("B-00000011")).toBeTruthy();
-    expect(batches.getByText("5.000 kg")).toBeTruthy();
-    expect(batches.getByText("2026-11-20")).toBeTruthy();
+    // 數量與單位分開排版，以整段文字比對。
+    expect(batches.getByText((_, el) => el?.tagName === "P" && el.textContent === "5.000 kg")).toBeTruthy();
+    expect(batches.getByText("到期日 2026-11-20")).toBeTruthy();
     expect(screen.queryByRole("button", { name: "換位置 B-00000011" })).toBeNull();
+  });
+
+  it("uses tables for locations and batches on wide screens", async () => {
+    // jsdom 預設 matchMedia 一律不符合（卡片版面）；這裡模擬 1366 寬的螢幕。
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query.includes("min-width"), media: query, onchange: null,
+      addEventListener: () => {}, removeEventListener: () => {}, addListener: () => {},
+      removeListener: () => {}, dispatchEvent: () => false,
+    }));
+    renderPage(admin, batchHandler());
+
+    const row = (await screen.findByText("冷藏庫 A")).closest("tr")!;
+    expect(within(row).getByText("R-01")).toBeTruthy();
+    expect(within(row).getByText("靠門口")).toBeTruthy();
+    expect(within(row).getByRole("button", { name: "編輯 R-01" })).toBeTruthy();
+    const batches = await openBatches();
+    expect(screen.getByRole("table", { name: "R-01 的批次" })).toBeTruthy();
+    expect(batches.getByText("2026-11-20")).toBeTruthy();
+    expect(batches.getByRole("button", { name: "換位置 B-00000011" })).toBeTruthy();
+  });
+
+  it("shows active location counts by storage type", async () => {
+    renderPage(staff, batchHandler());
+
+    const summary = within(await screen.findByLabelText("位置摘要"));
+    await waitFor(() => expect(summary.getByText("啟用中").nextSibling?.textContent).toBe("2"));
+    expect(summary.getByText("冷藏").nextSibling?.textContent).toBe("1");
+    expect(summary.getByText("冷凍").nextSibling?.textContent).toBe("1");
+    expect(summary.getByText("常溫").nextSibling?.textContent).toBe("0");
+  });
+
+  it("guides admins to create the first location when there are none", async () => {
+    renderPage(admin, (path) => path.includes("/storage-locations?") ? json(list([])) : undefined);
+
+    expect(await screen.findByText("還沒有儲存位置")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "新增第一個位置" }));
+    expect(await screen.findByRole("dialog", { name: "新增儲存位置" })).toBeTruthy();
   });
 
   it("tells the user when a location has more batches than shown", async () => {

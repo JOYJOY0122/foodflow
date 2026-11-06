@@ -1,0 +1,44 @@
+/* 進場動畫：淡入並由下往上滑入；清單項目以 --delay 依序出現。 */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  /* 終點不寫 opacity，動畫結束後保留元素原本的透明度（停用位置是淡化的）。 */
+  to {
+    transform: none;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  /* 終點不寫 opacity，動畫結束後保留元素原本的透明度（停用位置是淡化的）。 */
+  to {
+    transform: none;
+  }
+}
+
+.enter {
+  animation: rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.reveal {
+  animation: reveal 340ms ease-out both;
+}
+
+/* 尊重系統「減少動態效果」設定。 */
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .reveal {
+    animation: none;
+  }
+}
+
+/* 展開時捲動對齊用：預留固定頁首（72px）加一點間距。 */
+.anchor {
+  scroll-margin-top: 88px;
+}
