@@ -4,7 +4,8 @@ import { invalidateStockQueries, queryKeys } from "../../shared/api/queryKeys";
 import * as api from "./api";
 
 export type {
-  StorageLocation, StorageLocationCreate, StorageLocationFilters, StorageLocationUpdate,
+  LocationBatch, StorageLocation, StorageLocationCreate, StorageLocationFilters,
+  StorageLocationUpdate,
 } from "./api";
 export { PAGE_SIZE } from "./api";
 
@@ -37,4 +38,21 @@ export function useDeleteStorageLocation() {
   const client = useQueryClient();
   return useMutation({ mutationFn: api.deleteStorageLocation,
     onSuccess: () => invalidateLocations(client) });
+}
+export function useActiveStorageLocations(enabled: boolean) {
+  return useQuery({ queryKey: queryKeys.storageLocations.active,
+    queryFn: ({ signal }) => api.listActiveStorageLocations(signal), enabled });
+}
+export function useLocationBatches(locationId: number) {
+  return useQuery({ queryKey: queryKeys.storageLocations.batches(locationId),
+    queryFn: ({ signal }) => api.listLocationBatches(locationId, signal) });
+}
+/** 換位置會改變庫存、預警頁顯示的位置（AD-18）。 */
+export function useMoveBatch() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ batchId, body }: { batchId: number; body: api.BatchMoveRequest }) =>
+      api.moveBatch(batchId, body),
+    onSuccess: () => invalidateLocations(client),
+  });
 }

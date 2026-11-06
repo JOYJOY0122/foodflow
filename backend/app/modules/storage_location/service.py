@@ -1,12 +1,20 @@
-"""儲存位置規則（FR-05）與交易邊界。權限由路由層 require_admin 把關。"""
+"""儲存位置與整批換位置的規則（FR-05、A3）與交易邊界。權限由路由層 require_admin 把關。"""
 
-from app.core.enums import ErrorCode, StorageType
-from app.core.errors import DomainError
+from uuid import uuid4
+
+from app.core.clock import Clock
+from app.core.enums import GoodsReceiptStatus, StorageType
 from app.core.uow import UnitOfWork
-from app.db.models import StorageLocation
+from app.db.models import InventoryBatch, StorageLocation
+from app.modules.inventory.ledger import StockLedger, StockOp
 from app.modules.storage_location.errors import (
+    batch_not_found,
     duplicate_code,
+    exhausted_batch,
+    invalid_move_target,
+    location_not_found,
     referenced_on_delete,
+    reversed_source,
     stocked_on_deactivate,
 )
 from app.modules.storage_location.repository import StorageLocationRepository
@@ -79,10 +87,60 @@ class StorageLocationService:
     def _lock(self, location_id: int) -> StorageLocation:
         location = self._repository.lock(location_id)
         if location is None:
-            raise DomainError(ErrorCode.NOT_FOUND, "找不到儲存位置")
+            raise location_not_found()
         return location
 
     def _ensure_code_free(self, code: str, own_id: int | None) -> None:
         existing = self._repository.find_code(code)
         if existing is not None and existing.id != own_id:
             raise duplicate_code()
+
+
+class BatchRelocationService:
+    """整批換位置：批次只經 StockLedger 鎖定與寫入，不產生數量異動（AD-5、AD-20）。"""
+
+    def __init__(
+        self,
+        repository: StorageLocationRepository,
+        ledger: StockLedger,
+        uow: UnitOfWork,
+        clock: Clock,
+    ) -> None:
+        self._repository = repository
+        self._ledger = ledger
+        self._uow = uow
+        self._clock = clock
+
+    def list_batches(
+        self, location_id: int, page: int, page_size: int
+    ) -> tuple[list[InventoryBatch], int]:
+        if self._repository.get(location_id) is None:
+            raise location_not_found()
+        return self._repository.list_location_batches(location_id, page, page_size)
+
+    def move(
+        self, batch_id: int, *, to_location_id: int, reason: str, operator_id: int
+    ) -> InventoryBatch:
+        with self._uow.transaction():
+            # 鎖序：inventory_batch → storage_location；來源單頭只讀不鎖（AD-7）。
+            locked = self._ledger.lock_batches([batch_id])
+            if not locked:
+                raise batch_not_found()
+            batch = locked[0]
+            if self._repository.source_status(batch.source_item_id) is GoodsReceiptStatus.REVERSED:
+                raise reversed_source()
+            if batch.remaining_quantity <= 0:
+                raise exhausted_batch()
+            if batch.current_location_id != to_location_id:
+                # 鎖住目標位置，與停用位置（先鎖位置再數批次）互斥。
+                target = self._repository.lock_as_move_target(to_location_id)
+                if target is None or not target.is_active:
+                    raise invalid_move_target()
+                op = StockOp(
+                    operation_group_id=uuid4(),
+                    operator_id=operator_id,
+                    occurred_at=self._clock.now(),
+                    reason=reason,
+                )
+                self._ledger.move(batch, to_location_id, op)
+            return self._repository.load_batch(batch.id)

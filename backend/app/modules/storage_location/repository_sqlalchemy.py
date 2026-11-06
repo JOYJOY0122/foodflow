@@ -1,12 +1,18 @@
 """SQLAlchemy 儲存位置存取；不 commit、不判斷規則。"""
 
 from sqlalchemy import exists, func, or_, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.core.db import for_update
-from app.core.enums import StorageType
+from app.core.enums import GoodsReceiptStatus, StorageType
 from app.core.errors import flush_or_raise
-from app.db.models import BatchLocationChange, GoodsReceiptItem, InventoryBatch, StorageLocation
+from app.db.models import (
+    BatchLocationChange,
+    GoodsReceipt,
+    GoodsReceiptItem,
+    InventoryBatch,
+    StorageLocation,
+)
 from app.modules.storage_location.errors import duplicate_code, referenced_on_delete
 from app.modules.storage_location.repository import StorageLocationRepository
 
@@ -52,9 +58,21 @@ class SqlAlchemyStorageLocationRepository(StorageLocationRepository):
         )
         return list(items), total
 
+    def get(self, location_id: int) -> StorageLocation | None:
+        return self._session.get(StorageLocation, location_id)
+
     def lock(self, location_id: int) -> StorageLocation | None:
         return self._session.scalar(
             for_update(select(StorageLocation).where(StorageLocation.id == location_id))
+        )
+
+    def lock_as_move_target(self, location_id: int) -> StorageLocation | None:
+        # FOR NO KEY UPDATE：與停用時的 FOR UPDATE 互斥，但不擋 FK 檢查的 KEY SHARE，
+        # 兩個批次對向換位置（A→B、B→A）才不會死結。
+        return self._session.scalar(
+            for_update(
+                select(StorageLocation).where(StorageLocation.id == location_id), key_share=True
+            )
         )
 
     def find_code(self, code: str) -> StorageLocation | None:
@@ -98,3 +116,41 @@ class SqlAlchemyStorageLocationRepository(StorageLocationRepository):
 
     def flush(self) -> None:
         flush_or_raise(self._session, {"uq_storage_location_code": duplicate_code()})
+
+    def list_location_batches(
+        self, location_id: int, page: int, page_size: int
+    ) -> tuple[list[InventoryBatch], int]:
+        stmt = select(InventoryBatch).where(
+            InventoryBatch.current_location_id == location_id,
+            InventoryBatch.remaining_quantity > 0,
+        )
+        total = self._session.scalar(select(func.count()).select_from(stmt.subquery())) or 0
+        items = self._session.scalars(
+            stmt.options(*_BATCH_VIEW_OPTIONS)
+            .order_by(InventoryBatch.expiry_date, InventoryBatch.id)
+            .offset((page - 1) * page_size)
+            .limit(page_size)
+        )
+        return list(items), total
+
+    def load_batch(self, batch_id: int) -> InventoryBatch:
+        return self._session.scalars(
+            select(InventoryBatch)
+            .where(InventoryBatch.id == batch_id)
+            .options(*_BATCH_VIEW_OPTIONS)
+            .execution_options(populate_existing=True)
+        ).one()
+
+    def source_status(self, source_item_id: int) -> GoodsReceiptStatus:
+        return self._session.scalars(
+            select(GoodsReceipt.status)
+            .join(GoodsReceiptItem, GoodsReceiptItem.receipt_id == GoodsReceipt.id)
+            .where(GoodsReceiptItem.id == source_item_id)
+        ).one()
+
+
+_BATCH_VIEW_OPTIONS = (
+    selectinload(InventoryBatch.ingredient),
+    selectinload(InventoryBatch.current_location),
+    selectinload(InventoryBatch.source_item).selectinload(GoodsReceiptItem.receipt),
+)

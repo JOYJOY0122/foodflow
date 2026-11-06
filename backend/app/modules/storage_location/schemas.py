@@ -1,10 +1,12 @@
 """儲存位置 API 契約：只接受明列欄位，回應不含內部欄位。"""
 
+from datetime import date
 from typing import Annotated
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator
 
-from app.core.enums import StorageType
+from app.core.enums import GoodsReceiptStatus, StorageType
+from app.core.types import NonNegativeQuantity
 
 LocationCode = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=32)]
 LocationName = Annotated[
@@ -49,6 +51,35 @@ class StorageLocationResponse(BaseModel):
 
 class StorageLocationList(BaseModel):
     items: list[StorageLocationResponse]
+    total: int
+    page: int
+    page_size: int
+
+
+MoveReason = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=500)]
+
+
+class BatchMoveRequest(StrictRequest):
+    to_location_id: int
+    reason: MoveReason
+
+
+class LocationBatchResponse(BaseModel):
+    id: int
+    batch_number: str
+    ingredient_id: int
+    ingredient_name: str
+    unit: str
+    remaining_quantity: NonNegativeQuantity
+    expiry_date: date
+    current_location_id: int
+    current_location_code: str
+    current_location_name: str
+    source_status: GoodsReceiptStatus
+
+
+class LocationBatchList(BaseModel):
+    items: list[LocationBatchResponse]
     total: int
     page: int
     page_size: int

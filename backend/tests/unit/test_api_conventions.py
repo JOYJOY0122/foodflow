@@ -28,6 +28,8 @@ PRODUCTION_API_ROUTES: set[tuple[str, str]] = {
     ("POST", "/api/v1/storage-locations"),
     ("PATCH", "/api/v1/storage-locations/{location_id}"),
     ("DELETE", "/api/v1/storage-locations/{location_id}"),
+    ("GET", "/api/v1/storage-locations/{location_id}/batches"),
+    ("POST", "/api/v1/inventory-batches/{batch_id}/location"),
 }
 
 

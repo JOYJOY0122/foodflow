@@ -10,6 +10,12 @@ import { StorageLocationsPage } from "./StorageLocationsPage";
 
 const fridge = { id: 1, code: "R-01", name: "冷藏庫 A", storage_type: "REFRIGERATED",
   description: "靠門口", is_active: true };
+const freezer = { ...fridge, id: 2, code: "F-01", name: "冷凍庫 B", storage_type: "FROZEN",
+  description: null };
+const chicken = { id: 11, batch_number: "B-00000011", ingredient_id: 5, ingredient_name: "雞胸肉",
+  unit: "kg", remaining_quantity: "5.000", expiry_date: "2026-11-20", current_location_id: 1,
+  current_location_code: "R-01", current_location_name: "冷藏庫 A", source_status: "CONFIRMED" };
+const batchPage = { items: [chicken], total: 1, page: 1, page_size: 100 };
 const list = (items: unknown[]) => ({ items, total: items.length, page: 1, page_size: 20 });
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
 const error = (code: string, message: string, fields: unknown[] = [], details = {}) =>
@@ -174,5 +180,91 @@ describe("StorageLocationsPage", () => {
     expect(await screen.findByText("儲存位置已刪除")).toBeTruthy();
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     await waitFor(() => expect(client.getQueryState(queryKeys.inventory.all)?.isInvalidated).toBe(true));
+  });
+  /** 批次清單、啟用位置清單與換位置請求的共用 mock。 */
+  function batchHandler(onMove?: (init: RequestInit) => Response): Handler {
+    return (path, init) => {
+      if (path.includes("/storage-locations/1/batches")) return json(batchPage);
+      if (path.includes("is_active=true&page_size=100")) return json(list([fridge, freezer]));
+      if (path.includes("/inventory-batches/11/location") && onMove) return onMove(init);
+    };
+  }
+
+  async function openBatches() {
+    fireEvent.click(await screen.findByRole("button", { name: "查看 R-01 的批次" }));
+    return within(await screen.findByRole("table", { name: "R-01 的批次" }));
+  }
+
+  it("lets staff expand a location to see its stocked batches without move actions", async () => {
+    renderPage(staff, batchHandler());
+
+    const batches = await openBatches();
+
+    expect(batches.getByText("雞胸肉")).toBeTruthy();
+    expect(batches.getByText("B-00000011")).toBeTruthy();
+    expect(batches.getByText("5.000 kg")).toBeTruthy();
+    expect(batches.getByText("2026-11-20")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "換位置 B-00000011" })).toBeNull();
+  });
+
+  it("tells the user when a location has more batches than shown", async () => {
+    renderPage(staff, (path) => path.includes("/storage-locations/1/batches")
+      ? json({ ...batchPage, total: 130 }) : undefined);
+
+    await openBatches();
+
+    expect(screen.getByText("共 130 個批次，只顯示到期日最早的 1 個。")).toBeTruthy();
+  });
+
+  it("moves a batch to another active location and refreshes stock queries", async () => {
+    let sent: unknown;
+    const { client, fetchMock } = renderPage(admin, batchHandler((init) => {
+      sent = JSON.parse(String(init.body));
+      return json({ ...chicken, current_location_id: 2, current_location_code: "F-01",
+        current_location_name: "冷凍庫 B" });
+    }));
+    await openBatches();
+    fireEvent.click(screen.getByRole("button", { name: "換位置 B-00000011" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    fireEvent.click(dialog.getByRole("combobox", { name: /^移到/ }));
+    expect(screen.queryByRole("option", { name: "R-01 冷藏庫 A" })).toBeNull();
+    fireEvent.click(await screen.findByRole("option", { name: "F-01 冷凍庫 B" }));
+    fireEvent.change(dialog.getByLabelText(/^原因/), { target: { value: " 冷藏庫除霜 " } });
+    fireEvent.submit(dialog.getByRole("button", { name: "確認換位置" }).closest("form")!);
+
+    expect(await screen.findByText("批次 B-00000011 已移到 F-01 冷凍庫 B")).toBeTruthy();
+    expect(sent).toEqual({ to_location_id: 2, reason: "冷藏庫除霜" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    await waitFor(() => expect(client.getQueryState(queryKeys.inventory.all)?.isInvalidated).toBe(true));
+    // 原位置的批次清單要重新抓取，搬走的批次才會消失。
+    expect(fetchMock.mock.calls.filter(([path]) =>
+      String(path).includes("/storage-locations/1/batches")).length).toBeGreaterThan(1);
+  });
+
+  it("keeps the reason and marks the target field when the move is rejected", async () => {
+    renderPage(admin, batchHandler(() => json(error("RULE_VIOLATION", "目標位置不存在或已停用",
+      [{ field: "to_location_id", message: "請選擇啟用中的儲存位置" }]), 422)));
+    await openBatches();
+    fireEvent.click(screen.getByRole("button", { name: "換位置 B-00000011" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    fireEvent.click(dialog.getByRole("combobox", { name: /^移到/ }));
+    fireEvent.click(await screen.findByRole("option", { name: "F-01 冷凍庫 B" }));
+    fireEvent.change(dialog.getByLabelText(/^原因/), { target: { value: "除霜" } });
+    fireEvent.submit(dialog.getByRole("button", { name: "確認換位置" }).closest("form")!);
+
+    expect(await dialog.findByText("請選擇啟用中的儲存位置")).toBeTruthy();
+    expect(dialog.getByText("目標位置不存在或已停用")).toBeTruthy();
+    expect((dialog.getByLabelText(/^原因/) as HTMLTextAreaElement).value).toBe("除霜");
+  });
+
+  it("requires a target before sending the move", async () => {
+    const { fetchMock } = renderPage(admin, batchHandler());
+    await openBatches();
+    fireEvent.click(screen.getByRole("button", { name: "換位置 B-00000011" }));
+    const dialog = within(await screen.findByRole("dialog"));
+    fireEvent.submit(dialog.getByRole("button", { name: "確認換位置" }).closest("form")!);
+
+    expect(await dialog.findByText("請選擇目標位置")).toBeTruthy();
+    expect(fetchMock.mock.calls.some(([path]) => String(path).includes("/inventory-batches/"))).toBe(false);
   });
 });

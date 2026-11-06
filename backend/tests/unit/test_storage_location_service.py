@@ -27,9 +27,15 @@ class FakeRepository(StorageLocationRepository):
         ]
         return items, len(items)
 
+    def get(self, location_id):
+        return next((loc for loc in self.locations if loc.id == location_id), None)
+
     def lock(self, location_id):
         self.locked.append(location_id)
         return next((loc for loc in self.locations if loc.id == location_id), None)
+
+    def lock_as_move_target(self, location_id):
+        return self.lock(location_id)
 
     def find_code(self, code):
         return next((loc for loc in self.locations if loc.code == code), None)
@@ -49,6 +55,16 @@ class FakeRepository(StorageLocationRepository):
 
     def flush(self):
         pass
+
+    # 換位置用的查詢由 test_batch_relocation_service.py 測試。
+    def list_location_batches(self, location_id, page, page_size):
+        raise NotImplementedError
+
+    def load_batch(self, batch_id):
+        raise NotImplementedError
+
+    def source_status(self, source_item_id):
+        raise NotImplementedError
 
 
 @pytest.fixture
