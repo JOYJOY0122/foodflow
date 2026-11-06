@@ -1,8 +1,9 @@
-# AI 對話紀錄：/bmad-help
+# AI 對話紀錄：幫我寫覆寫設定，把 output_folder 改成 _bmad-output，…
 
 - 成員：黃予岑
 - 時間：2026-10-29 20:17 ～ 2026-10-29 20:20
 - 分支：（未記錄）
+- AI 工具：Claude Code
 - Session：17268418-cce6-41e2-ab6f-32e21529bdbd
 
 > 由 `scripts/ai-evidence/capture.mjs` 自動產生，工具呼叫只列摘要，密碼等機密已遮蔽。

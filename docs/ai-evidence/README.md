@@ -6,9 +6,9 @@
 
 | 日期 | 成員 | 分支 | 主題（第一個指令） | 輪數 | 資料夾 |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-29 20:17 | 黃予岑 |  | /bmad-help | 3 | [20261029-mintguesss-17268418](20261029-mintguesss-17268418/) |
-| 2026-10-29 20:21 | 黃予岑 |  | /bmad-agent-analyst | 19 | [20261029-mintguesss-36a12b47](20261029-mintguesss-36a12b47/) |
+| 2026-10-29 20:17 | 黃予岑 |  | 幫我寫覆寫設定，把 output_folder 改成 _bmad-output，… | 3 | [20261029-mintguesss-17268418](20261029-mintguesss-17268418/) |
+| 2026-10-29 20:21 | 黃予岑 |  | PRD | 19 | [20261029-mintguesss-36a12b47](20261029-mintguesss-36a12b47/) |
 | 2026-11-05 02:16 | 黃予岑 | docs/architecture | 依 README 的開發環境需求檢查並安裝：用 uv 安裝 Python 3.1… | 3 | [20261105-mintguesss-0b97d4d3](20261105-mintguesss-0b97d4d3/) |
 | 2026-11-05 02:33 | 黃予岑 | chore/skeleton | <pasted_content id="dc2b"> | 13 | [20261105-mintguesss-502997a0](20261105-mintguesss-502997a0/) |
-| 2026-11-05 14:30 | 黃予岑 | chore/ui-shell | <pasted_content id="e69a"> | 8 | [20261105-mintguesss-470d0799](20261105-mintguesss-470d0799/) |
+| 2026-11-05 14:30 | 黃予岑 | chore/ui-shell | <pasted_content id="e69a"> | 13 | [20261105-mintguesss-470d0799](20261105-mintguesss-470d0799/) |
 | 2026-11-06 02:47 | 黃予岑 | chore/ui-shell | 開分支已在 chore/ui-shell。請延續 frontend/src/ap… | 5 | [20261106-mintguesss-9a09bb59](20261106-mintguesss-9a09bb59/) |
