@@ -11,3 +11,7 @@
 | 2026-11-05 02:16 | 黃予岑 | docs/architecture | 依 README 的開發環境需求檢查並安裝：用 uv 安裝 Python 3.1… | 3 | [20261105-mintguesss-0b97d4d3](20261105-mintguesss-0b97d4d3/) |
 | 2026-11-05 02:33 | 黃予岑 | chore/skeleton | /bmad-agent-dev | 13 | [20261105-mintguesss-502997a0](20261105-mintguesss-502997a0/) |
 | 2026-11-05 14:30 | 黃予岑 | chore/seed-demo | /bmad-agent-dev | 2 | [20261105-mintguesss-470d0799](20261105-mintguesss-470d0799/) |
+| 2026-11-05 23:14 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 9 | [20261105-joyjoy0122-01a1ac43](20261105-joyjoy0122-01a1ac43/) |
+| 2026-11-05 23:33 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 3 | [20261105-joyjoy0122-01a1ac57](20261105-joyjoy0122-01a1ac57/) |
+| 2026-11-06 00:39 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 7 | [20261106-joyjoy0122-01a1ac75](20261106-joyjoy0122-01a1ac75/) |
+| 2026-11-06 02:06 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 2 | [20261106-joyjoy0122-01a1ace4](20261106-joyjoy0122-01a1ace4/) |
