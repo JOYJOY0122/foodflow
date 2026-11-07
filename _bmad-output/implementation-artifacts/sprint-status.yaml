@@ -1,0 +1,91 @@
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created, ready for development
+#   - in-progress: Developer actively working on implementation
+#   - review: Implementation complete, ready for review
+#   - done: Story completed
+
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when its first story starts (via build's sprint sync)
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates the next story after the previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; the status view surfaces open ones
+generated: 11-06-2026 03:23
+last_updated: 11-06-2026 17:52
+project: foodflow
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+development_status:
+  epic-1: backlog
+  1-1-管理食材分類: backlog
+  1-2-管理食材與安全庫存量: backlog
+  1-3-管理供應商: backlog
+  epic-1-retrospective: optional
+
+  epic-2: in-progress
+  2-1-管理儲存位置: review
+  2-2-整批換位置: review
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-建立與編輯進貨草稿: backlog
+  3-2-確認入庫: backlog
+  3-3-查詢進貨單: backlog
+  3-4-沖銷錯誤進貨: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-庫存總覽與篩選: backlog
+  4-2-查看食材的批次清單: backlog
+  4-3-查看單一批次的異動歷程: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-取得-fefo-領用建議: backlog
+  5-2-依建議確認領用並扣庫存: backlog
+  5-3-改選批次並記錄非-fefo-原因: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-登記報廢: backlog
+  6-2-提供一鍵全數報廢: backlog
+  6-3-盤點調整: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-效期預警清單: backlog
+  7-2-低庫存預警: backlog
+  7-3-預警篩選與前往處理: backlog
+  7-4-從過期預警一鍵報廢: backlog
+  7-5-設定預警天數: backlog
+  epic-7-retrospective: optional
+
+  epic-8: backlog
+  8-1-查詢庫存異動: backlog
+  8-2-期初期末庫存統計: backlog
+  8-3-報廢分布與損失金額: backlog
+  epic-8-retrospective: optional
+
+  epic-9: backlog
+  9-1-備份與還原: backlog
+  9-2-第-9-節端到端驗收與跨日驗收: backlog
+  epic-9-retrospective: optional

@@ -16,7 +16,7 @@
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-03.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-04.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-05.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-06.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：B 需求分析
-- 狀態：待確認
+- 狀態：已確認
 
 ## 2
 
@@ -27,11 +27,11 @@
 - AI 工具／BMad 技能：Claude Code＋bmad-prd
 - Prompt 重點：使用者指出大餐廳也適用且更有需求，但跨店／連鎖可先排除；另外補上產品名稱「食序 FoodFlow」
 - AI 產出摘要：修改 prd.md 願景、非目標使用者、NFR-5 效能指標（上調至 1000 種食材/20000 批次/30 人同時使用）；addendum.md 同步改名；移除 prd.md 開頭的 BOM 字元
-- 人工判斷與修正：使用者否決「僅限小型餐廳」的範圍限制，明確要求納入大型獨立店、排除連鎖；AI 追問「大餐廳用法與小餐廳有何不同」在本段對話中未見使用者回答（待本人補充）
+- 人工判斷與修正：使用者否決「僅限小型餐廳」的範圍限制，明確要求納入不限規模的單一門市獨立餐廳、排除連鎖，並將產品命名為「食序 FoodFlow」
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-07.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-08.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：B 需求分析
-- 狀態：待確認
+- 狀態：已確認
 
 ## 3
 
@@ -42,11 +42,11 @@
 - AI 工具／BMad 技能：Claude Code＋bmad-prd（搭配課程大綱內容）
 - Prompt 重點：使用者貼出課程大綱要求，詢問下一步是否可以寫 Use Case
 - AI 產出摘要：指出 4 人 3 週內完成 27 條 FR 偏緊，建議將 FR 分「期中必做」與「期末補齊」兩層；確認資料表數量已達課程最低要求；指出 AI 使用紀錄可作為(g)項 30% 評分證據；將專案背景存入記憶檔
-- 人工判斷與修正：（待本人補充）－對話中未見使用者當輪對「是否分期中/期末兩層」做出具體決定，僅於下一輪簡短回覆
+- 人工判斷與修正：本人後來在 SRS v3.0 採用分層：首版（期中）必做與期末延伸分開，並刪減食譜、銷售扣料、Email
 - 採用程度：僅參考
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-09.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：A 專案管理
-- 狀態：待確認
+- 狀態：已確認
 
 ## 4
 
@@ -57,11 +57,11 @@
 - AI 工具／BMad 技能：Claude Code（依 Kung 課本格式撰寫，非特定 bmad skill）
 - Prompt 重點：使用者簡短回覆 AI 先前提出的兩個待確認問題（「暫時沒有」「不用」），請 AI 照課本格式撰寫涵蓋全部 FR 的 Use Case
 - AI 產出摘要：use-cases.md：4 類參與者（店主、店長、採購人員、廚房人員）、19 個 Use Case 分 6 子系統、FR 追溯矩陣與 3 迭代開發順序建議、PlantUML Use Case 圖、Expanded 雙欄表、7 項 PRD 不清楚之處回饋
-- 人工判斷與修正：AI 主動提出「登入不列為獨立 Use Case」的設計決定，並建議使用者向助教確認格式是否符合課程要求，對話中未見使用者此時回覆確認（待本人補充）；後續第 11 輪架構師提及此 Use Case 文件可能已過時、架構設計不依賴其內容
+- 人工判斷與修正：本人未採用此版 use case（以舊版 PRD FR-1～27 推導），在檔案開頭標註已作廢、僅保留作紀錄，use case 改由負責 B 文件的組員依 SRS v3.0 重做
 - 採用程度：僅參考
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-09.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-10.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：B 需求分析
-- 狀態：待確認
+- 狀態：已確認
 
 ## 5
 
@@ -76,7 +76,7 @@
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-11.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-12.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-13.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-14.png、docs/ai-evidence/20261029-mintguesss-36a12b47/turn-15.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：C 軟體設計（架構）
-- 狀態：待確認
+- 狀態：已確認
 
 ## 6
 
@@ -91,7 +91,7 @@
 - 採用程度：直接採用
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-16.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：C 軟體設計
-- 狀態：待確認
+- 狀態：已確認
 
 ## 7
 
@@ -102,11 +102,11 @@
 - AI 工具／BMad 技能：Claude Code（PowerShell／Bash 工具操作，非特定 bmad skill）
 - Prompt 重點：使用者要求檢查並安裝 Java／Graphviz、下載 plantuml.jar（加入 .gitignore、不 commit jar 檔）、將 .puml 轉為中文正常顯示的 PNG、有語法錯誤就修正至成功、並把 C 文件中的程式碼區塊換成圖片連結，不要 commit
 - AI 產出摘要：以 winget 安裝 Graphviz 16.1.0，核對 plantuml.jar SHA-256，產出 c-system-architecture.png、c-subsystem-dependency.png，並更新 c-software-design.md 的圖片連結與 ai-log.md 紀錄
-- 人工判斷與修正：（待本人補充）－對話中僅見 AI 自行發現並修正圖上標籤用詞（「唯讀查詢的模組」改為「不修改庫存的模組」），使用者尚未在本輪確認圖片內容是否正確
+- 人工判斷與修正：本人逐張檢查圖檔：中文顯示、箭頭方向，並確認沒有首版不做的排程與 Email
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-17.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：C 軟體設計／G AI 使用紀錄
-- 狀態：待確認
+- 狀態：已確認
 
 ## 8
 
@@ -117,11 +117,11 @@
 - AI 工具／BMad 技能：Claude Code＋bmad-agent-architect
 - Prompt 重點：使用者要求修改 srs.md 第 4.1 節權限表與第 7.1 節以符合架構定稿決議，同步到 prd.md，並在 10.3 差異表補一列
 - AI 產出摘要：權限表拆分「異動查詢、期初期末統計」（雙角色）與「報廢分布與損失金額」（限管理者）兩列；7.1 節補充 NFR-07 負載測試延至期末；10.3 節新增 2026-11-05 架構定稿調整列；同步 prd.md 並將架構主幹「已確認決策」更新為「SRS 已同步」
-- 人工判斷與修正：（待本人補充）－AI 主動提出 10.3 表 v2.0 欄位留空及版本號是否需升版兩項待確認事項，對話中未見使用者回覆
+- 人工判斷與修正：本人決定需求文件必須與架構定稿一致，要求修改 SRS 並同步 prd.md、在差異表補列；版本號維持 3.0
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-18.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：B 需求分析
-- 狀態：待確認
+- 狀態：已確認
 
 ## 9
 
@@ -132,8 +132,8 @@
 - AI 工具／BMad 技能：Claude Code（PlantUML／Graphviz 操作）
 - Prompt 重點：使用者要求改為 top to bottom 方向、使用者在最上、PostgreSQL 在最下，寬度控制在約 1000 像素以內，元件名稱與箭頭關係不可更動，重新轉 PNG 並回報新尺寸，不要 commit
 - AI 產出摘要：多次嘗試排版（左右排寬 1185px 超標；隱藏連線版本順序錯亂不可用），最終改為上下排列，輸出 791×782px 的新 c-system-architecture.png
-- 人工判斷與修正：（待本人補充）－對話中尚未見使用者確認最終圖片是否符合需求
+- 人工判斷與修正：本人發現架構圖寬約 2000 像素，放進 A4 文件字會太小，要求改為直式版面並把寬度控制在約 1000 像素內
 - 採用程度：小幅修改
 - 截圖／檔案：docs/ai-evidence/20261029-mintguesss-36a12b47/turn-19.png、docs/ai-evidence/20261029-mintguesss-36a12b47/transcript.md
 - 對應文件章節：C 軟體設計
-- 狀態：待確認
+- 狀態：已確認

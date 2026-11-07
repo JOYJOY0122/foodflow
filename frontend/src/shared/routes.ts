@@ -7,6 +7,16 @@ export const routes = {
   issueNew: "/issues/new",
   wasteRecordNew: "/waste-records/new",
   goodsReceiptNew: "/goods-receipts/new",
+  inventory: "/inventory",
+  goodsReceipts: "/goods-receipts",
+  issues: "/issues",
+  wasteRecords: "/waste-records",
+  stocktakes: "/stocktakes",
+  reports: "/reports",
+  ingredients: "/ingredients",
+  ingredientCategories: "/ingredient-categories",
+  suppliers: "/suppliers",
+  storageLocations: "/storage-locations",
 } as const;
 
 /** 對應後端 AlertAction；alerts API 完成後改用 schema.d.ts 產生的型別。 */

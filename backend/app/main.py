@@ -24,6 +24,7 @@ from app.modules.auth.dependencies import get_current_employee
 from app.modules.auth.router import public_router as auth_public_router
 from app.modules.auth.router import router as auth_router
 from app.modules.health.router import router as health_router
+from app.modules.storage_location.router import router as storage_location_router
 
 logger = logging.getLogger(__name__)
 
@@ -133,7 +134,7 @@ def create_app(
     extra_api_routers: Sequence[APIRouter] = (),
     frontend_dist: Path = DEFAULT_FRONTEND_DIST,
 ) -> FastAPI:
-    """extra_api_routers 只給測試注入；正式 app 沒有任何業務寫入端點。"""
+    """extra_api_routers 只給測試注入，正式 app 只掛下方明列的 router。"""
     get_settings()  # 設定不合法（例如缺 JWT_SECRET）時拒絕啟動。
 
     app = FastAPI(title="食序 FoodFlow API", version="0.1.0")
@@ -146,6 +147,7 @@ def create_app(
         responses=ERROR_RESPONSES,
     )
     api_router.include_router(auth_router)
+    api_router.include_router(storage_location_router)
     for router in extra_api_routers:
         api_router.include_router(router)
     app.include_router(api_router)

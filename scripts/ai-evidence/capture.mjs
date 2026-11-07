@@ -599,7 +599,12 @@ function draftRows(info, turns, folder, folderRel) {
     const existing = parseRowsMd(fs.readFileSync(rowsFile, "utf8"));
     if (existing.some((r) => r["狀態"] === "已確認")) return { note: "已有本人確認的紀錄列，不覆寫", turns: citedTurns(existing) };
   }
-  const raw = draftWithAvailableAI(draftPrompt(info, digestForModel(turns)), info.tool);
+  // AI 回傳的欄位名稱可能少了空格、用半形斜線等，統一對回標準欄位名稱
+  const canon = (k) => String(k).replace(/[\s/／]/g, "").replace(/BMAD/i, "BMad");
+  const known = new Map([...ROW_FIELDS, "輪次"].map((f) => [canon(f), f]));
+  const raw = draftWithAvailableAI(draftPrompt(info, digestForModel(turns)), info.tool).map((r) =>
+    Object.fromEntries(Object.entries(r).map(([k, v]) => [known.get(canon(k)) ?? k, Array.isArray(v) && k !== "輪次" ? v.join("、") : v])),
+  );
   const rows = raw.map((r) => {
     const shots = (Array.isArray(r["輪次"]) ? r["輪次"] : [])
       .filter((n) => Number.isInteger(n) && n >= 1 && n <= turns.length)

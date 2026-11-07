@@ -1,8 +1,9 @@
-# AI 對話紀錄：/bmad-agent-dev
+# AI 對話紀錄：<pasted_content id="dc2b">
 
 - 成員：黃予岑
 - 時間：2026-11-05 02:33 ～ 2026-11-05 12:51
 - 分支：chore/skeleton
+- AI 工具：Claude Code
 - Session：502997a0-cea0-4dd3-bf20-a790a7424055
 
 > 由 `scripts/ai-evidence/capture.mjs` 自動產生，工具呼叫只列摘要，密碼等機密已遮蔽。
