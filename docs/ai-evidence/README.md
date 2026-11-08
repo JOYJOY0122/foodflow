@@ -22,5 +22,6 @@
 | 2026-11-06 02:47 | 黃予岑 | chore/ui-shell | 開分支已在 chore/ui-shell。請延續 frontend/src/ap… | 5 | [20261106-mintguesss-9a09bb59](20261106-mintguesss-9a09bb59/) |
 | 2026-11-06 16:46 | 黃予岑 | feat/storage-location | 做 Story 2.1\ | 20 | [20261106-mintguesss-c53e7785](20261106-mintguesss-c53e7785/) |
 | 2026-11-07 02:40 | 黃予岑 | feat/storage-location | <task-notification> | 3 | [20261107-mintguesss-c200aef4](20261107-mintguesss-c200aef4/) |
-| 2026-11-08 14:05 | 黃予岑 | chore/design-system | 以 docs/design/storage-demo.html作為視覺基準，為食… | 8 | [20261108-mintguesss-097d9c94](20261108-mintguesss-097d9c94/) |
+| 2026-11-08 14:05 | 黃予岑 | chore/design-system | 以 docs/design/storage-demo.html作為視覺基準，為食… | 17 | [20261108-mintguesss-097d9c94](20261108-mintguesss-097d9c94/) |
 | 2026-11-08 14:05 | 黃予岑 | feat/storage-location | /bmad-agent-dev | 1 | [20261108-mintguesss-8cbcef45](20261108-mintguesss-8cbcef45/) |
+| 2026-11-08 17:26 | 黃予岑 | feat/fefo-issue | <task-notification> | 11 | [20261108-mintguesss-35da92f7](20261108-mintguesss-35da92f7/) |
