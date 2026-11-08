@@ -12,12 +12,15 @@
 | 2026-11-05 02:33 | 黃予岑 | chore/skeleton | <pasted_content id="dc2b"> | 13 | [20261105-mintguesss-502997a0](20261105-mintguesss-502997a0/) |
 | 2026-11-05 14:30 | 黃予岑 | chore/ui-shell | <pasted_content id="e69a"> | 13 | [20261105-mintguesss-470d0799](20261105-mintguesss-470d0799/) |
 | 2026-11-05 23:14 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 9 | [20261105-joyjoy0122-01a1ac43](20261105-joyjoy0122-01a1ac43/) |
+| 2026-11-05 23:18 | user |  | <external_codex_apps_open_page>{"page_id… | 10 | [20261105-user-01a1ac49](20261105-user-01a1ac49/) |
 | 2026-11-05 23:33 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 3 | [20261105-joyjoy0122-01a1ac57](20261105-joyjoy0122-01a1ac57/) |
+| 2026-11-06 00:16 | user |  | The following is the Codex agent history… | 17 | [20261106-user-01a1ac49](20261106-user-01a1ac49/) |
 | 2026-11-06 00:39 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 7 | [20261106-joyjoy0122-01a1ac75](20261106-joyjoy0122-01a1ac75/) |
+| 2026-11-06 01:41 | user | main | The following is the Codex agent history… | 9 | [20261106-user-01a1accc](20261106-user-01a1accc/) |
 | 2026-11-06 02:06 | 謝文佳 | main | <external_codex_apps_open_page>{"page_id… | 2 | [20261106-joyjoy0122-01a1ace4](20261106-joyjoy0122-01a1ace4/) |
+| 2026-11-06 02:07 | user | feat/auth | The following is the Codex agent history… | 1 | [20261106-user-01a1ace2](20261106-user-01a1ace2/) |
 | 2026-11-06 02:47 | 黃予岑 | chore/ui-shell | 開分支已在 chore/ui-shell。請延續 frontend/src/ap… | 5 | [20261106-mintguesss-9a09bb59](20261106-mintguesss-9a09bb59/) |
 | 2026-11-06 16:46 | 黃予岑 | feat/storage-location | 做 Story 2.1\ | 20 | [20261106-mintguesss-c53e7785](20261106-mintguesss-c53e7785/) |
-| 2026-11-05 23:18 | user |  | <external_codex_apps_open_page>{"page_id… | 10 | [20261105-user-01a1ac49](20261105-user-01a1ac49/) |
-| 2026-11-06 00:16 | user |  | The following is the Codex agent history… | 17 | [20261106-user-01a1ac49](20261106-user-01a1ac49/) |
-| 2026-11-06 01:41 | user | main | The following is the Codex agent history… | 9 | [20261106-user-01a1accc](20261106-user-01a1accc/) |
-| 2026-11-06 02:07 | user | feat/auth | The following is the Codex agent history… | 1 | [20261106-user-01a1ace2](20261106-user-01a1ace2/) |
+| 2026-11-07 02:40 | 黃予岑 | feat/storage-location | <task-notification> | 3 | [20261107-mintguesss-c200aef4](20261107-mintguesss-c200aef4/) |
+| 2026-11-08 14:05 | 黃予岑 | chore/design-system | 以 docs/design/storage-demo.html作為視覺基準，為食… | 8 | [20261108-mintguesss-097d9c94](20261108-mintguesss-097d9c94/) |
+| 2026-11-08 14:05 | 黃予岑 | feat/storage-location | /bmad-agent-dev | 1 | [20261108-mintguesss-8cbcef45](20261108-mintguesss-8cbcef45/) |

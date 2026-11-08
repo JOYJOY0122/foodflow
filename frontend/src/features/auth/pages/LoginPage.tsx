@@ -1,8 +1,9 @@
-import { Alert, Button, Container, Loader, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
+import { Alert, Box, Button, Container, Group, Loader, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useState, type FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router";
 
 import { routes } from "../../../shared/routes";
+import { SproutIcon } from "../../../shared/ui/icons";
 import { useCurrentEmployee, useLogin } from "../hooks";
 
 export function LoginPage() {
@@ -26,13 +27,20 @@ export function LoginPage() {
       navigate(routes.home, { replace: true });
     } catch { /* Mutation error is displayed; preserve input for retry. */ }
   }
-  return <div style={{ minHeight: "100vh", background: "#f7f8f2" }}><Container size={440} py={64}>
+  return <div style={{ minHeight: "100vh", background: "var(--ff-canvas)" }}><Container size={440} py={64}>
     <Stack gap="lg">
-      <div><Title order={1} c="forest.8">食序 FoodFlow</Title><Text c="dimmed" mt="xs">餐廳食材管理，從每一天開始。</Text></div>
-      <Paper withBorder radius="lg" p="xl" shadow="xs">
+      <div>
+        <Group gap={12} wrap="nowrap">
+          <Box className="ff-icon-tile" w={42} h={42} style={{ borderRadius: "var(--mantine-radius-lg)" }}
+            aria-hidden="true"><SproutIcon size={22} /></Box>
+          <Title order={1} c="forest.9">食序 FoodFlow</Title>
+        </Group>
+        <Text c="dimmed" mt="xs">餐廳食材管理，從每一天開始。</Text>
+      </div>
+      <Paper withBorder radius="xl" p="xl" shadow="md">
         <form onSubmit={submit}>
           <Stack>
-            <Title order={2} size="h3">登入帳號</Title>
+            <Title order={2}>登入帳號</Title>
             <Text size="sm" c="dimmed">請使用管理者提供的個人帳號。</Text>
             {login.error && <Alert color="red" title="登入未完成" role="alert">{login.error.message}</Alert>}
             <TextInput label="帳號" autoComplete="username" autoFocus required maxLength={64}

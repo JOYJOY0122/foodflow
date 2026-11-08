@@ -47,3 +47,62 @@ export const DotsIcon = (props: IconProps) => <Icon {...props}>
   <circle cx="5" cy="12" r="1.2" fill="currentColor" /><circle cx="12" cy="12" r="1.2" fill="currentColor" />
   <circle cx="19" cy="12" r="1.2" fill="currentColor" />
 </Icon>;
+
+/* ── 導覽與頁首用圖示（18px 預設；頁首方塊用 20px）── */
+
+export const BellIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z" /><path d="M10 20.5a2 2 0 0 0 4 0" />
+</Icon>;
+
+export const LayersIcon = (props: IconProps) => <Icon {...props}>
+  <path d="m12 3 9 5-9 5-9-5z" /><path d="m3 13 9 5 9-5" />
+</Icon>;
+
+export const TruckIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M3 6h11v10H3zM14 10h4l3 3v3h-7" /><circle cx="7" cy="18" r="1.8" /><circle cx="17" cy="18" r="1.8" />
+</Icon>;
+
+export const OutboxIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M4 14v5h16v-5" /><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5" />
+</Icon>;
+
+export const ClipboardIcon = (props: IconProps) => <Icon {...props}>
+  <rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4h6v3H9zM9 12l2 2 4-4M9 17h6" />
+</Icon>;
+
+export const ChartIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M4 20h16M7 16v-5M12 16V7M17 16v-8" />
+</Icon>;
+
+export const LeafIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14z" /><path d="M5 19 13 11" />
+</Icon>;
+
+export const TagIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M3 12V4h8l10 10-8 8z" /><circle cx="7.5" cy="8.5" r="1.4" />
+</Icon>;
+
+export const StoreIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M4 9.5 5.5 4h13L20 9.5M4 9.5h16M5 9.5V20h14V9.5M10 20v-5h4v5" />
+</Icon>;
+
+export const FolderIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z" />
+</Icon>;
+
+export const UsersIcon = (props: IconProps) => <Icon {...props}>
+  <circle cx="9" cy="8" r="3.2" /><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+  <path d="M15.5 5.2a3.2 3.2 0 0 1 0 5.6M17.5 14.3c2 .8 3.5 3 3.5 5.7" />
+</Icon>;
+
+export const LogoutIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M10 4H5v16h5" /><path d="M14 8l4 4-4 4M18 12H9" />
+</Icon>;
+
+export const ToolIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M14.5 5.5a4 4 0 0 0 4.9 4.9L11 18.8a2.1 2.1 0 0 1-3-3l8.4-8.4" /><path d="M14.5 5.5 17 3l4 4-2.5 2.5" />
+</Icon>;
+
+export const SproutIcon = (props: IconProps) => <Icon {...props}>
+  <path d="M12 21v-9" /><path d="M12 12c0-4 3-6 7-6 0 4-3 6-7 6zM12 14c0-3-2.5-5-6-5 0 3 2.5 5 6 5z" />
+</Icon>;
