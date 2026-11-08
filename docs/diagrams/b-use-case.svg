@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1450" viewBox="0 0 1500 1450"><rect width="100%" height="100%" fill="white"/><g font-family="Microsoft JhengHei, sans-serif">
+<text x="750" y="35" text-anchor="middle" font-size="26" fill="#26354A" font-weight="700">食序 FoodFlow｜完整使用案例圖</text>
+<rect x="200" y="125" width="1100" height="1140" rx="18" fill="#FAFBFD" stroke="#CAD3DF" stroke-width="1.3"/>
+<text x="750" y="158" text-anchor="middle" font-size="19" fill="#26354A" font-weight="700">餐飲食材庫存與效期預警系統</text>
+<polyline points="180,390 180,1300 785,1300 785,290" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="1340,1130 1340,185 735,185 735,1085" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="118,700 180,700" fill="none" stroke="#A87845" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="1340,700 1387,700" fill="none" stroke="#508998" stroke-width="2" stroke-linejoin="round"/>
+<polyline points="95,650 95,80 1410,80 1410,625" fill="none" stroke="#7D8999" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="1410,625 1403,611 1417,611" fill="white" stroke="#7D8999" stroke-width="1.5"/>
+<text x="750" y="72" text-anchor="middle" font-size="14" fill="#65748A" font-weight="400">角色泛化：管理者承接一般員工的全部使用案例</text>
+<circle cx="95" cy="650" r="13" fill="white" stroke="#A87845" stroke-width="2"/>
+<polyline points="95,663 95,705" fill="none" stroke="#A87845" stroke-width="2"/>
+<polyline points="72,680 118,680" fill="none" stroke="#A87845" stroke-width="2"/>
+<polyline points="95,705 73,732" fill="none" stroke="#A87845" stroke-width="2"/>
+<polyline points="95,705 117,732" fill="none" stroke="#A87845" stroke-width="2"/>
+<text x="95" y="762" text-anchor="middle" font-size="19" fill="#A87845" font-weight="700">管理者</text>
+<circle cx="1410" cy="650" r="13" fill="white" stroke="#508998" stroke-width="2"/>
+<polyline points="1410,663 1410,705" fill="none" stroke="#508998" stroke-width="2"/>
+<polyline points="1387,680 1433,680" fill="none" stroke="#508998" stroke-width="2"/>
+<polyline points="1410,705 1388,732" fill="none" stroke="#508998" stroke-width="2"/>
+<polyline points="1410,705 1432,732" fill="none" stroke="#508998" stroke-width="2"/>
+<text x="1410" y="762" text-anchor="middle" font-size="19" fill="#508998" font-weight="700">一般員工</text>
+<rect x="220" y="205" width="460" height="240" rx="14" fill="#EFF5FD" stroke="#A7BFDF" stroke-width="1.3"/>
+<text x="450" y="237" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">1.0 帳號與權限管理模組</text>
+<polyline points="735,305 655,305" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="305" rx="205" ry="27" fill="white" stroke="#A7BFDF" stroke-width="1.2"/>
+<text x="450" y="311" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-01  登入與登出</text>
+<polyline points="180,390 245,390" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="390" rx="205" ry="27" fill="white" stroke="#A7BFDF" stroke-width="1.2"/>
+<text x="450" y="396" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-02  員工帳號管理</text>
+<rect x="820" y="205" width="460" height="240" rx="14" fill="#EFF8F3" stroke="#9FC7B1" stroke-width="1.3"/>
+<text x="1050" y="237" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">2.0 基本資料與儲存位置管理模組</text>
+<polyline points="785,290 845,290" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="290" rx="205" ry="27" fill="white" stroke="#9FC7B1" stroke-width="1.2"/>
+<text x="1050" y="296" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-03  食材與分類管理</text>
+<polyline points="785,350 845,350" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="350" rx="205" ry="27" fill="white" stroke="#9FC7B1" stroke-width="1.2"/>
+<text x="1050" y="356" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-04  供應商管理</text>
+<polyline points="785,410 845,410" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="410" rx="205" ry="27" fill="white" stroke="#9FC7B1" stroke-width="1.2"/>
+<text x="1050" y="416" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-05  儲存位置管理</text>
+<rect x="220" y="465" width="460" height="240" rx="14" fill="#FFF6E9" stroke="#DDC299" stroke-width="1.3"/>
+<text x="450" y="497" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">3.0 進貨與批次管理模組</text>
+<polyline points="735,550 655,550" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="550" rx="205" ry="27" fill="white" stroke="#DDC299" stroke-width="1.2"/>
+<text x="450" y="556" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-06  建立進貨單與確認入庫</text>
+<polyline points="735,610 655,610" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="610" rx="205" ry="27" fill="white" stroke="#DDC299" stroke-width="1.2"/>
+<text x="450" y="616" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-07  查詢進貨</text>
+<polyline points="180,670 245,670" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="670" rx="205" ry="27" fill="white" stroke="#DDC299" stroke-width="1.2"/>
+<text x="450" y="676" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-08  沖銷進貨</text>
+<rect x="820" y="465" width="460" height="240" rx="14" fill="#F1F0FA" stroke="#BCB2D8" stroke-width="1.3"/>
+<text x="1050" y="497" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">4.0 批次庫存查詢模組</text>
+<polyline points="1340,565 1255,565" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="565" rx="205" ry="27" fill="white" stroke="#BCB2D8" stroke-width="1.2"/>
+<text x="1050" y="571" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-09  查詢庫存總覽</text>
+<polyline points="1340,650 1255,650" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="650" rx="205" ry="27" fill="white" stroke="#BCB2D8" stroke-width="1.2"/>
+<text x="1050" y="656" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-10  查看批次與異動</text>
+<rect x="220" y="725" width="460" height="240" rx="14" fill="#EBF7F7" stroke="#9DC8CA" stroke-width="1.3"/>
+<text x="450" y="757" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">5.0 食材領用與消耗登記模組</text>
+<polyline points="735,870 655,870" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="870" rx="205" ry="27" fill="white" stroke="#9DC8CA" stroke-width="1.2"/>
+<text x="450" y="866" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-11  登記領用與扣庫存</text>
+<text x="450" y="889" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">（含 FEFO 領用建議）</text>
+<rect x="820" y="725" width="460" height="240" rx="14" fill="#FFF8E6" stroke="#D9C58D" stroke-width="1.3"/>
+<text x="1050" y="757" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">6.0 效期與低庫存預警模組</text>
+<polyline points="1340,825 1255,825" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="825" rx="205" ry="27" fill="white" stroke="#D9C58D" stroke-width="1.2"/>
+<text x="1050" y="821" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-12  預警首頁</text>
+<text x="1050" y="844" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">（效期與低庫存提醒）</text>
+<polyline points="785,910 845,910" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="910" rx="205" ry="27" fill="white" stroke="#D9C58D" stroke-width="1.2"/>
+<text x="1050" y="916" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-13  預警設定</text>
+<rect x="220" y="985" width="460" height="240" rx="14" fill="#FCEFEF" stroke="#D8B1B1" stroke-width="1.3"/>
+<text x="450" y="1017" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">7.0 報廢與盤點模組</text>
+<polyline points="735,1085 655,1085" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="1085" rx="205" ry="27" fill="white" stroke="#D8B1B1" stroke-width="1.2"/>
+<text x="450" y="1091" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-14  報廢登記</text>
+<polyline points="180,1170 245,1170" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="450" cy="1170" rx="205" ry="27" fill="white" stroke="#D8B1B1" stroke-width="1.2"/>
+<text x="450" y="1176" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-15  盤點調整</text>
+<rect x="820" y="985" width="460" height="240" rx="14" fill="#F0F4F8" stroke="#ABBBCB" stroke-width="1.3"/>
+<text x="1050" y="1017" text-anchor="middle" font-size="18" fill="#26354A" font-weight="700">8.0 異動紀錄與統計模組</text>
+<polyline points="1340,1070 1255,1070" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="1070" rx="205" ry="27" fill="white" stroke="#ABBBCB" stroke-width="1.2"/>
+<text x="1050" y="1076" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-16  查詢庫存異動</text>
+<polyline points="1340,1130 1255,1130" fill="none" stroke="#508998" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="1130" rx="205" ry="27" fill="white" stroke="#ABBBCB" stroke-width="1.2"/>
+<text x="1050" y="1136" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-17  庫存統計</text>
+<polyline points="785,1190 845,1190" fill="none" stroke="#A87845" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="1050" cy="1190" rx="205" ry="27" fill="white" stroke="#ABBBCB" stroke-width="1.2"/>
+<text x="1050" y="1186" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">UC-18  報廢統計</text>
+<text x="1050" y="1209" text-anchor="middle" font-size="16" fill="#26354A" font-weight="400">（報廢分布與損失金額）</text>
+<text x="750" y="1345" text-anchor="middle" font-size="17" fill="#26354A" font-weight="400">藍綠線：一般員工可執行　　暖棕線：管理者專屬</text>
+<text x="750" y="1376" text-anchor="middle" font-size="15" fill="#65748A" font-weight="400">同色實線共用連接幹線，均表示角色參與；不代表流程順序。</text>
+<text x="750" y="1402" text-anchor="middle" font-size="14" fill="#65748A" font-weight="400">UC-05 含整批移位｜UC-11 含非 FEFO 選批與原因｜UC-14 含過期批次全數報廢</text>
+<text x="750" y="1426" text-anchor="middle" font-size="14" fill="#65748A" font-weight="400">首版 FR-01～FR-18 · 除登入外均須有效登入與權限驗證 · 僅提供站內預警</text>
+</g></svg>
