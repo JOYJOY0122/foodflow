@@ -1,0 +1,122 @@
+@startuml d-class-core
+title 食序 FoodFlow｜既有服務與共用類別圖（D 文件參考）
+top to bottom direction
+hide circle
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 13
+skinparam classAttributeIconSize 0
+skinparam classBorderColor #64748B
+skinparam classBackgroundColor white
+skinparam ArrowColor #475569
+skinparam ArrowFontSize 11
+skinparam packageStyle rectangle
+skinparam roundcorner 8
+skinparam nodesep 45
+skinparam ranksep 60
+
+package "庫存操作契約" #FFF7ED {
+  class StockOp <<frozen dataclass>> {
+    +operation_group_id : UUID
+    +operator_id : int
+    +occurred_at : datetime
+    +reason : str | None
+  }
+  abstract class StockLedger <<ABC>> {
+    {abstract} +lock_batches(batch_ids) : list[InventoryBatch]
+    {abstract} +lock_ingredient_batches(ingredient_id) : list[InventoryBatch]
+    {abstract} +find_operation(group_id, tx_type) : list[InventoryTransaction]
+    {abstract} +receive(item, op) : InventoryTransaction
+    {abstract} +deduct(batch, quantity, tx_type, op, is_non_fefo) : InventoryTransaction
+    {abstract} +adjust(batch, actual_quantity, op) : InventoryTransaction | None
+    {abstract} +reverse(original, op) : InventoryTransaction
+    {abstract} +move(batch, to_location_id, op) : BatchLocationChange | None
+  }
+  class SqlAlchemyStockLedger {
+    -_session : Session
+    -_locked_ids : set[int]
+    -_locked_in : SessionTransaction | None
+  }
+}
+package "交易邊界" #ECFDF5 {
+  abstract class UnitOfWork <<ABC>> {
+    {abstract} +transaction() : AbstractContextManager[None]
+  }
+  class SqlAlchemyUnitOfWork {
+    -_session : Session
+    -_active : bool
+    --
+    +transaction() : Iterator[None] <<contextmanager>>
+  }
+}
+package "可替換時間來源" #EFF6FF {
+  abstract class Clock <<ABC>> {
+    {abstract} +now() : datetime
+    +today() : date
+  }
+  class SystemClock {
+    +now() : datetime
+  }
+  class FixedClock {
+    -_fixed_now : datetime
+    --
+    +now() : datetime
+  }
+}
+package "已實作範例：帳號 Service／Repository" #F5F3FF {
+  class AuthService {
+    -_repository : AuthRepository
+    -_uow : UnitOfWork
+    -_clock : Clock
+    -_settings : Settings
+    --
+    +login(username, password) : tuple[Employee, str, datetime]
+    +list_employees(search, role, is_active, page, page_size) : tuple[list[Employee], int]
+    +create(operator_id, *, username, name, password, role, is_active) : Employee
+    +bootstrap_admin(*, username, name, password) : Employee
+    +update(operator_id, employee_id, *, name, role, is_active) : Employee
+    +reset_password(operator_id, employee_id, password) : None
+    +logout(employee_id) : None
+  }
+  abstract class AuthRepository <<ABC>> {
+    {abstract} +find_username(username) : Employee | None
+    {abstract} +lock_all() : list[Employee]
+    {abstract} +list_employees(search, role, is_active, page, page_size) : tuple[list[Employee], int]
+    {abstract} +add(employee) : None
+    {abstract} +flush() : None
+  }
+  class SqlAlchemyAuthRepository {
+    -_session : Session
+  }
+  class Settings <<reference>> {
+  }
+}
+StockLedger <|-- SqlAlchemyStockLedger
+UnitOfWork <|-- SqlAlchemyUnitOfWork
+Clock <|-- SystemClock
+Clock <|-- FixedClock
+AuthRepository <|-- SqlAlchemyAuthRepository
+StockLedger ..> StockOp : 方法參數
+AuthService --> AuthRepository : _repository
+AuthService --> UnitOfWork : _uow
+AuthService --> Clock : _clock
+AuthService --> Settings : _settings
+note right of SqlAlchemyStockLedger
+  覆寫 StockLedger 全部 8 個抽象方法。
+  實體型別參照 B 類別圖。
+  只 flush；交易由 Service 的 UoW 管理。
+  時間由 StockOp 傳入。
+end note
+note bottom of SqlAlchemyAuthRepository
+  覆寫 AuthRepository 全部 5 個抽象方法；只 flush。
+end note
+legend bottom left
+  全部類別與方法皆取自目前原始碼
+  + 公開；- 內部欄位（Python 慣例，非存取強制）
+  空心三角為繼承；實線箭頭為持有相依；虛線箭頭為使用
+  省略建構子、參數型別／預設值與具體實作重複的覆寫方法
+  Iterator 是 @contextmanager 包裝前的原始碼型別
+  尚未實作的進貨／查詢服務與設計模式另列於文件
+endlegend
+@enduml
