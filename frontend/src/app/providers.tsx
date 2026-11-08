@@ -3,7 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { createQueryClient, queryKeys } from "../shared/api/queryKeys";
-import { theme } from "./theme";
+import { cssVariablesResolver, theme } from "./theme";
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(createQueryClient);
@@ -20,7 +20,7 @@ export function Providers({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("foodflow:unauthorized", clear);
   }, [queryClient]);
   return (
-    <MantineProvider theme={theme} forceColorScheme="light">
+    <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver} forceColorScheme="light">
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </MantineProvider>
   );
