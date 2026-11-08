@@ -1,0 +1,89 @@
+/*
+ * 全站樣式：Mantine 主題（theme.ts）做不到的部分。
+ * 顏色一律引用 theme.ts 的 cssVariablesResolver 輸出的 --ff-* 變數或 Mantine 色票變數。
+ */
+
+body {
+  background: var(--ff-canvas);
+  background-attachment: fixed;
+  color: var(--ff-text);
+  /* 數量、日期、批次數上下對齊（DESIGN.md › Typography）。 */
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 主要按鈕：漸層由 theme.ts 設定，這裡加上色光陰影；停用與載入中不加陰影。 */
+.ff-button-primary:not(:disabled):not([data-disabled]):not([data-loading]) {
+  box-shadow: var(--ff-shadow-glow);
+}
+/* Mantine 在 hover 時用 background-color 套 --button-hover（實色），漸層要另外用 background-image 疊上。 */
+.ff-button-primary:hover:not(:disabled):not([data-disabled]) {
+  background-image: var(--ff-gradient-primary-hover);
+}
+
+/* 輸入框：#849788 外框，聚焦時加 2px 光暈（錯誤狀態維持 Mantine 的紅框）。 */
+[data-mantine-color-scheme] .mantine-Input-wrapper[data-variant="default"]:not([data-error]) {
+  --input-bd: var(--ff-border-input);
+  --input-bd-focus: var(--ff-focus-ring);
+}
+.mantine-Input-wrapper:not([data-error]) .mantine-Input-input:focus,
+.mantine-Input-wrapper:not([data-error]) .mantine-Input-input:focus-within {
+  box-shadow: var(--ff-focus-glow);
+}
+
+/* 側欄導覽：選中項用漸層底、白字、色光陰影；子項縮排並加引導線。 */
+.ff-navlink {
+  border-radius: var(--mantine-radius-md);
+  color: var(--ff-sidebar-fg);
+  font-size: var(--mantine-font-size-md);
+}
+.ff-navlink .mantine-NavLink-section {
+  color: var(--ff-sidebar-icon);
+}
+.ff-navlink[data-active] {
+  background-image: var(--ff-gradient-nav);
+  color: var(--mantine-color-white);
+  box-shadow: var(--ff-shadow-glow);
+}
+.ff-navlink[data-active] .mantine-NavLink-section,
+.ff-navlink[data-active] .mantine-NavLink-label {
+  color: var(--mantine-color-white);
+}
+.ff-navlink-children {
+  margin-inline-start: 20px;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid var(--ff-line-nested);
+}
+
+/* 資料表格：列高至少 52px，列與列之間只用 line-soft 分隔。 */
+.ff-data-table tbody td {
+  height: 52px;
+}
+
+/* 工具列：白到 surface-subtle 的直向淡漸層，下方以 line-soft 分隔。 */
+.ff-toolbar {
+  background: var(--ff-gradient-toolbar);
+  border-bottom: 1px solid var(--ff-line-soft);
+}
+
+/* 主卡片的半透明白框。 */
+.ff-card {
+  border: 1px solid var(--ff-line);
+}
+
+/* 摘要卡：78% 不透明白加模糊，讓底下的漸層隱約透出。 */
+.ff-raised {
+  background: var(--ff-surface-raised);
+  backdrop-filter: blur(6px);
+}
+
+/* 頁首與品牌的漸層圖示方塊。 */
+.ff-icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--ff-gradient-tile);
+  color: var(--mantine-color-white);
+  box-shadow: var(--ff-shadow-glow);
+}

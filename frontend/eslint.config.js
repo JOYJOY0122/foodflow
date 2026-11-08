@@ -27,6 +27,20 @@ const OTHER_FEATURE_API_PATTERN = {
   message: "AD-17：不可 import 其他 feature 的 api.ts，請使用對方匯出的 hook",
 };
 
+// DESIGN.md：顏色只從主題取（Mantine 色票名稱或 --ff-* CSS 變數），hex 只能寫在 src/app/theme.ts 與 src/app/*.css。
+const COLOR_MESSAGE =
+  "顏色只能從主題取：請用 Mantine 色票名稱（例如 forest.8、expired.8）或 --ff-* CSS 變數，見 docs/design/DESIGN.md 與 src/app/theme.ts";
+// 「#1」這類序號不會被擋：hex 至少 3 碼。
+const HEX_COLOR = String.raw`/#[0-9a-fA-F]{3,8}\b/`;
+const FUNCTION_COLOR = String.raw`/(rgba?|hsla?)\(/i`;
+const NO_HARDCODED_COLORS = [
+  "error",
+  { selector: `Literal[value=${HEX_COLOR}]`, message: COLOR_MESSAGE },
+  { selector: `Literal[value=${FUNCTION_COLOR}]`, message: COLOR_MESSAGE },
+  { selector: `TemplateElement[value.raw=${HEX_COLOR}]`, message: COLOR_MESSAGE },
+  { selector: `TemplateElement[value.raw=${FUNCTION_COLOR}]`, message: COLOR_MESSAGE },
+];
+
 export default tseslint.config(
   { ignores: ["dist/", "node_modules/", "src/shared/api/schema.d.ts", "*.config.cjs"] },
   js.configs.recommended,
@@ -43,6 +57,12 @@ export default tseslint.config(
           patterns: [CLIENT_PATTERN, API_PATTERN],
         },
       ],
+    },
+  },
+  {
+    files: ["src/features/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-syntax": NO_HARDCODED_COLORS,
     },
   },
   {

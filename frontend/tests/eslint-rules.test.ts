@@ -1,5 +1,5 @@
 // @vitest-environment node
-/** AD-17、T6：實際跑 ESLint，確認宣稱的保護真的擋得到。 */
+/** AD-17、T6、DESIGN.md：實際跑 ESLint，確認宣稱的保護真的擋得到。 */
 
 import { ESLint } from "eslint";
 import { describe, expect, it } from "vitest";
@@ -53,5 +53,36 @@ describe("AD-17 data access rules", () => {
     [COMPONENT, 'react-router'],
   ])("%s may import %s", async (file, source) => {
     expect(await ruleIds(file, `import "${source}";\n`)).toEqual([]);
+  });
+});
+
+describe("DESIGN.md color guard", () => {
+  it.each([
+    [PAGE, 'export const c = "#1f2a24";\n'],
+    [PAGE, 'export const c = "#fff";\n'],
+    [PAGE, 'export const c = "1px solid #e3eadf";\n'],
+    [COMPONENT, "export const c = `rgb(1,2,3)`;\n"],
+    [COMPONENT, "const a = 0.5;\nexport const c = `rgba(0,0,0,${a})`;\n"],
+    [COMPONENT, 'export const c = "rgba(35, 90, 55, 0.45)";\n'],
+    [HOOKS, 'export const c = "hsl(120 30% 40%)";\n'],
+    [PAGE, 'export const c = "HSLA(120, 30%, 40%, 0.5)";\n'],
+    [PAGE, 'export const el = <div color="#236e4b" />;\n'],
+    [API, 'export const c = "#236e4b";\n'],
+  ])("%s rejects hard-coded color in %j", async (file, code) => {
+    expect(await ruleIds(file, code)).toContain("no-restricted-syntax");
+  });
+
+  it.each([
+    'export const c = "#1";\n',
+    'export const c = `批次 #12`;\n',
+    'export const el = <div color="forest" />;\n',
+    'export const c = "var(--ff-line)";\n',
+    'export const c = "forest.8";\n',
+  ])("allows %j", async (code) => {
+    expect(await ruleIds(PAGE, code)).toEqual([]);
+  });
+
+  it("allows hex inside the theme", async () => {
+    expect(await ruleIds("src/app/theme.ts", 'export const c = "#1f2a24";\n')).toEqual([]);
   });
 });
