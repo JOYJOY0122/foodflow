@@ -1,0 +1,433 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram name="FoodFlow 使用案例圖" id="foodflow-use-case">
+    <mxGraphModel page="1" pageWidth="1500" pageHeight="1450" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n1" value="食序 FoodFlow｜完整使用案例圖" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=26;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="9" width="480" height="33" />
+        </mxCell>
+        <mxCell id="n2" value="" style="rounded=1;arcSize=8;fillColor=#FAFBFD;strokeColor=#CAD3DF;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="200" y="125" width="1100" height="1140" />
+        </mxCell>
+        <mxCell id="n3" value="餐飲食材庫存與效期預警系統" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=19;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="139" width="480" height="26" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="305" />
+            <mxPoint as="targetPoint" x="785" y="290" />
+            <Array as="points">
+              <mxPoint x="180" y="1300" />
+              <mxPoint x="785" y="1300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="1130" />
+            <mxPoint as="targetPoint" x="735" y="1085" />
+            <Array as="points">
+              <mxPoint x="1340" y="185" />
+              <mxPoint x="735" y="185" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=2" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="118" y="700" />
+            <mxPoint as="targetPoint" x="180" y="700" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=2" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="700" />
+            <mxPoint as="targetPoint" x="1387" y="700" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n8" value="無角色泛化版本：各角色直接連接可執行的使用案例" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=14;fontColor=#65748A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="58" width="480" height="21" />
+        </mxCell>
+        <mxCell id="n9" value="" style="shape=umlActor;fillColor=#FFFFFF;strokeColor=#A87845;strokeWidth=2;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="72" y="637" width="46" height="95" />
+        </mxCell>
+        <mxCell id="n10" value="管理者" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=19;fontColor=#A87845;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="-145" y="743" width="480" height="26" />
+        </mxCell>
+        <mxCell id="n11" value="" style="shape=umlActor;fillColor=#FFFFFF;strokeColor=#508998;strokeWidth=2;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1387" y="637" width="46" height="95" />
+        </mxCell>
+        <mxCell id="n12" value="一般員工" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=19;fontColor=#508998;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1170" y="743" width="480" height="26" />
+        </mxCell>
+        <mxCell id="n13" value="" style="rounded=1;arcSize=8;fillColor=#EFF5FD;strokeColor=#A7BFDF;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="220" y="205" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n14" value="1.0 帳號與權限管理模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="219" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e15" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="735" y="305" />
+            <mxPoint as="targetPoint" x="655" y="305" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="305" />
+            <mxPoint as="targetPoint" x="245" y="305" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n17" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#A7BFDF;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="278" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n18" value="UC-01  登入與登出" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="295" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e19" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="390" />
+            <mxPoint as="targetPoint" x="245" y="390" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n20" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#A7BFDF;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="363" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n21" value="UC-02  員工帳號管理" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="380" width="480" height="23" />
+        </mxCell>
+        <mxCell id="n22" value="" style="rounded=1;arcSize=8;fillColor=#EFF8F3;strokeColor=#9FC7B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="820" y="205" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n23" value="2.0 基本資料與儲存位置管理模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="219" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e24" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="290" />
+            <mxPoint as="targetPoint" x="845" y="290" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n25" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#9FC7B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="263" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n26" value="UC-03  食材與分類管理" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="280" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e27" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="350" />
+            <mxPoint as="targetPoint" x="845" y="350" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n28" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#9FC7B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="323" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n29" value="UC-04  供應商管理" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="340" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e30" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="410" />
+            <mxPoint as="targetPoint" x="845" y="410" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n31" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#9FC7B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="383" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n32" value="UC-05  儲存位置管理" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="400" width="480" height="23" />
+        </mxCell>
+        <mxCell id="n33" value="" style="rounded=1;arcSize=8;fillColor=#FFF6E9;strokeColor=#DDC299;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="220" y="465" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n34" value="3.0 進貨與批次管理模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="479" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e35" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="735" y="550" />
+            <mxPoint as="targetPoint" x="655" y="550" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e36" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="550" />
+            <mxPoint as="targetPoint" x="245" y="550" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n37" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#DDC299;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="523" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n38" value="UC-06  建立進貨單與確認入庫" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="540" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e39" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="735" y="610" />
+            <mxPoint as="targetPoint" x="655" y="610" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e40" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="610" />
+            <mxPoint as="targetPoint" x="245" y="610" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n41" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#DDC299;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="583" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n42" value="UC-07  查詢進貨" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="600" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e43" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="670" />
+            <mxPoint as="targetPoint" x="245" y="670" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n44" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#DDC299;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="643" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n45" value="UC-08  沖銷進貨" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="660" width="480" height="23" />
+        </mxCell>
+        <mxCell id="n46" value="" style="rounded=1;arcSize=8;fillColor=#F1F0FA;strokeColor=#BCB2D8;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="820" y="465" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n47" value="4.0 批次庫存查詢模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="479" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e48" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="565" />
+            <mxPoint as="targetPoint" x="1255" y="565" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e49" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="565" />
+            <mxPoint as="targetPoint" x="845" y="565" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n50" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#BCB2D8;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="538" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n51" value="UC-09  查詢庫存總覽" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="555" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e52" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="650" />
+            <mxPoint as="targetPoint" x="1255" y="650" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e53" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="650" />
+            <mxPoint as="targetPoint" x="845" y="650" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n54" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#BCB2D8;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="623" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n55" value="UC-10  查看批次與異動" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="640" width="480" height="23" />
+        </mxCell>
+        <mxCell id="n56" value="" style="rounded=1;arcSize=8;fillColor=#EBF7F7;strokeColor=#9DC8CA;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="220" y="725" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n57" value="5.0 食材領用與消耗登記模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="739" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e58" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="735" y="870" />
+            <mxPoint as="targetPoint" x="655" y="870" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e59" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="870" />
+            <mxPoint as="targetPoint" x="245" y="870" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n60" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#9DC8CA;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="843" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n61" value="UC-11  登記領用與扣庫存&#10;（含 FEFO 領用建議）" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="850" width="480" height="46" />
+        </mxCell>
+        <mxCell id="n62" value="" style="rounded=1;arcSize=8;fillColor=#FFF8E6;strokeColor=#D9C58D;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="820" y="725" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n63" value="6.0 效期與低庫存預警模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="739" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e64" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="825" />
+            <mxPoint as="targetPoint" x="1255" y="825" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e65" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="825" />
+            <mxPoint as="targetPoint" x="845" y="825" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n66" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#D9C58D;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="798" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n67" value="UC-12  預警首頁&#10;（效期與低庫存提醒）" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="805" width="480" height="46" />
+        </mxCell>
+        <mxCell id="e68" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="910" />
+            <mxPoint as="targetPoint" x="845" y="910" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n69" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#D9C58D;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="883" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n70" value="UC-13  預警設定" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="900" width="480" height="23" />
+        </mxCell>
+        <mxCell id="n71" value="" style="rounded=1;arcSize=8;fillColor=#FCEFEF;strokeColor=#D8B1B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="220" y="985" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n72" value="7.0 報廢與盤點模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="999" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e73" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="735" y="1085" />
+            <mxPoint as="targetPoint" x="655" y="1085" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e74" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="1085" />
+            <mxPoint as="targetPoint" x="245" y="1085" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n75" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#D8B1B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="1058" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n76" value="UC-14  報廢登記" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="1075" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e77" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="180" y="1170" />
+            <mxPoint as="targetPoint" x="245" y="1170" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n78" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#D8B1B1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="245" y="1143" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n79" value="UC-15  盤點調整" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="210" y="1160" width="480" height="23" />
+        </mxCell>
+        <mxCell id="n80" value="" style="rounded=1;arcSize=8;fillColor=#F0F4F8;strokeColor=#ABBBCB;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="820" y="985" width="460" height="240" />
+        </mxCell>
+        <mxCell id="n81" value="8.0 異動紀錄與統計模組" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=18;fontColor=#26354A;fontStyle=1;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="999" width="480" height="25" />
+        </mxCell>
+        <mxCell id="e82" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="1070" />
+            <mxPoint as="targetPoint" x="1255" y="1070" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e83" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="1070" />
+            <mxPoint as="targetPoint" x="845" y="1070" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n84" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#ABBBCB;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="1043" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n85" value="UC-16  查詢庫存異動" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="1060" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e86" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#508998;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1340" y="1130" />
+            <mxPoint as="targetPoint" x="1255" y="1130" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e87" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="1130" />
+            <mxPoint as="targetPoint" x="845" y="1130" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n88" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#ABBBCB;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="1103" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n89" value="UC-17  庫存統計" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="1120" width="480" height="23" />
+        </mxCell>
+        <mxCell id="e90" style="edgeStyle=none;rounded=0;endArrow=none;endFill=0;strokeColor=#A87845;strokeWidth=1.5" edge="1" parent="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="785" y="1190" />
+            <mxPoint as="targetPoint" x="845" y="1190" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n91" value="" style="ellipse;fillColor=#FFFFFF;strokeColor=#ABBBCB;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="845" y="1163" width="410" height="54" />
+        </mxCell>
+        <mxCell id="n92" value="UC-18  報廢統計&#10;（報廢分布與損失金額）" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="810" y="1170" width="480" height="46" />
+        </mxCell>
+        <mxCell id="n93" value="藍綠線：一般員工可執行　　暖棕線：管理者可執行" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=17;fontColor=#26354A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="1328" width="480" height="24" />
+        </mxCell>
+        <mxCell id="n94" value="同色實線共用連接幹線，均表示角色參與；不代表流程順序。" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=15;fontColor=#65748A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="1361" width="480" height="22" />
+        </mxCell>
+        <mxCell id="n95" value="UC-05 含整批移位｜UC-11 含非 FEFO 選批與原因｜UC-14 含過期批次全數報廢" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=14;fontColor=#65748A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="1388" width="480" height="21" />
+        </mxCell>
+        <mxCell id="n96" value="首版 FR-01～FR-18 · 除登入外均須有效登入與權限驗證 · 僅提供站內預警" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=14;fontColor=#65748A;fontStyle=0;fontFamily=Microsoft JhengHei;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="510" y="1412" width="480" height="21" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
